@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-// import { API } from './API';
+import { API } from './API';
 
 import { makeStyles } from '@material-ui/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-
-import { useCookies } from 'react-cookie';
-
+import Container from '@material-ui/core/Container'
 
 
 const Auth = () => {
@@ -17,40 +13,35 @@ const Auth = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [ isLoginView, setIsLoginView ] = useState(true);
+    const [invalidMessage, setInvalidMessage] = useState(false);
     
 
-    const [token, setToken, deleteToken] = useCookies(['usr-token']);  
-
-    useEffect(() => {
-        console.log(token);
-        if(token['usr-token']) window.location.href = '/dashboard';
-    }, [token]);
-
     const loginClicked = () => {
-    //     API.loginUser({username, password}, token['usr-token'])
-    //     .then( resp => setToken('usr-token', resp.token))
-    //     .catch( error => console.log(error))
-    // };
-        console.log("clicked");
+        let basicAuthToken = 'Basic ' + window.btoa(username + ":" + password);
+     
+        API.loginUser(basicAuthToken)
+        .then( () => {
+            setInvalidMessage(false);
+            window.location.href = '/task';
+        })
+        .catch( (error) => {
+            setInvalidMessage(true);
+            console.log(error);
+        })    
     };
 
     const registerClicked = () => {
-    //     API.registerUser({username, password})
-    //     .then( resp => loginClicked())
-    //     .catch( error => console.log(error))
-    // }
-        console.log("clicked");
-    };
-
-    const logoutUser = () => {
-        deleteToken(['usr-token']);
+        console.log("registered");
     };
 
    
 
     return (
         <Container maxWidth="md" className={styles.container}>
-             {isLoginView ? <h2>Signup</h2> : <h2>Login</h2>}
+                <div className={styles.heading}>
+                    {isLoginView ?  <h2>Login</h2> : <h2>Signup</h2>}
+                    {invalidMessage ? <h5 style= {{ color: 'red' }}>Invalid credentials</h5> : null}
+                </div>
                 <TextField
                     required 
                     id="standard-required" 
@@ -58,13 +49,21 @@ const Auth = () => {
                     onChange={event => setUsername(event.target.value)}
                 />
                 <TextField
-                    id="standard-password-input"
+                    id="standard-password-input-required"
                     label="Password"
                     type="password"
                     autoComplete="current-password" 
                     onChange={event => setPassword(event.target.value)}    
                 />
                 {isLoginView ?
+                    <Button 
+                    size="small"
+                    variant="contained"
+                    onClick={loginClicked} 
+                    className={styles.button}
+                    >
+                        Sign in
+                    </Button> :
                     <Button 
                         size="small"
                         variant="contained"
@@ -73,19 +72,11 @@ const Auth = () => {
                     >
                         Register
                     </Button> 
-                    :
-                    <Button 
-                    size="small"
-                    variant="contained"
-                    onClick={loginClicked} 
-                    className={styles.button}
-                    >
-                        Sign in
-                    </Button> 
                 }
             {isLoginView ?
-                    <p className={styles.p} style={{cursor:'pointer'}} onClick={() => setIsLoginView(false)}>Already have an account? Login here.</p>:
-                    <p className={styles.p} style={{cursor:'pointer'}} onClick={() => setIsLoginView(true)}>Don't have an account? Register here.</p>
+                    <p className={styles.p} style={{cursor:'pointer'}} onClick={() => setIsLoginView(false)}>Don't have an account? Register here.</p>:
+                    <p className={styles.p} style={{cursor:'pointer'}} onClick={() => setIsLoginView(true)}>Already have an account? Login here.</p>
+                   
             }
         </Container>
     );
@@ -99,6 +90,13 @@ const useStyles = makeStyles({
         justifyContent: 'center',
         alignItems: 'center',
         color: '#3f51b5',
+    },
+    heading: {
+        height: '15vh', 
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     button: {
         marginTop: '30px',
