@@ -5,7 +5,6 @@ import Header from './Header';
 import Footer from './Footer';
 import Kanban from './KanbanBoard';
 import TaskBoard from './TaskBoard';
-import Card from './InfoRepository';
 
 import { CookiesProvider } from 'react-cookie'; 
 
@@ -14,7 +13,6 @@ export default function App() {
     <CookiesProvider>
       <BrowserRouter>
         <Switch>
-<<<<<<< HEAD
           { /* Unauthenticated view */ }
           <Route exact path={["/"]}>
               <Route exact path='/' component={SignIn}/>                                     
@@ -34,14 +32,6 @@ export default function App() {
         </Switch>
       </BrowserRouter>
     </CookiesProvider>
-=======
-          <Route exact path='/repoCard' component={Card}/>   
-          <Route exact path='/kanban' component={Kanban}/>   
-          <Route exact path='/task' component={TaskBoard}/>                                 
-        </Switch> 
-        <Footer/>       
-    </BrowserRouter>   
->>>>>>> f0e489c59d4d98ae7528e4b7b9f0860308a6ef04
   );
 }
 
