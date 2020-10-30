@@ -10,14 +10,14 @@ import Container from '@material-ui/core/Container'
 
 const Auth = () => {
     const styles = useStyles();
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [ isLoginView, setIsLoginView ] = useState(true);
     const [invalidMessage, setInvalidMessage] = useState(false);
     
 
     const loginClicked = () => {
-        let basicAuthToken = 'Basic ' + window.btoa(username + ":" + password);
+        let basicAuthToken = 'Basic ' + window.btoa(email + ":" + password);
      
         API.loginUser(basicAuthToken)
         .then( () => {
@@ -45,8 +45,8 @@ const Auth = () => {
                 <TextField
                     required 
                     id="standard-required" 
-                    label="Username" 
-                    onChange={event => setUsername(event.target.value)}
+                    label="Email" 
+                    onChange={event => setEmail(event.target.value)}
                 />
                 <TextField
                     id="standard-password-input-required"
