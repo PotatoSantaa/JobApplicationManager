@@ -1,0 +1,6 @@
+
+> fibers@5.0.0 install D:\hw\cs4800\JobApplicationManager\server\client\node_modules\fibers
+> node build.js || nodejs build.js
+
+
+D:\hw\cs4800\JobApplicationManager\server\client\node_modules\fibers>if not defined npm_config_node_gyp (node "D:\nvm\v11.0.0\node_modules\npm\node_modules\npm-lifecycle\node-gyp-bin\\..\..\node_modules\node-gyp\bin\node-gyp.js" rebuild --release )  else (node "D:\nvm\v11.0.0\node_modules\npm\node_modules\node-gyp\bin\node-gyp.js" rebuild --release ) 
