@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
+import java.io.InputStream;
 
 @Service
 public class FireBaseInit {
@@ -13,14 +14,16 @@ public class FireBaseInit {
     public void initialize(){
         try{
             FileInputStream serviceAccount;
+
             if(System.getProperty("user.dir").contains("server")){
                 serviceAccount = new FileInputStream(System.getProperty("user.dir") + "/src/main/resources/jobapplicationmanager.json");
+
             }
             else {
                 serviceAccount = new FileInputStream(System.getProperty("user.dir") + "/server/src/main/resources/jobapplicationmanager.json");
             }
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+            FirebaseOptions options = FirebaseOptions.builder()
+                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .setDatabaseUrl("https://jobapplicationmanager-6361b.firebaseio.com")
                 .build();
 

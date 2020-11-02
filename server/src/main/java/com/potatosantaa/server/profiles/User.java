@@ -19,16 +19,19 @@ public class User {
     //    request.setEmail("stephen.tayag@gmail.com").setPassword("123456");
     //    userRecord = FirebaseAuth.getInstance().createUser(request);
         userRecord = mAuth.getUserByEmail("stephen.tayag@gmail.com");
-
+        System.out.println("User created.");
         //FirebaseUser currentUser = mAuth.getCurrentUser();
     }
 
+
+
+
+
     public String getUID(){
-        System.out.println("Successfully created new user: " + userRecord.getUid());
+
         return userRecord.getUid();
     }
      public String getEmail(){
-         System.out.println("Successfully created new user: " + userRecord.getEmail());
          return userRecord.getEmail();
      }
 

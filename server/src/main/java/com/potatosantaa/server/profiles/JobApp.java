@@ -1,11 +1,14 @@
 package com.potatosantaa.server.profiles;
 
+import com.google.firebase.auth.FirebaseAuthException;
+
 public class JobApp {
     private String jobID;
     private String jobTitle;
     private String company;
     private String jobDescription;
     private boolean haveApplied;
+
 
     public JobApp(){
         
@@ -59,4 +62,6 @@ public class JobApp {
     public void setJobDescription(String jobDescription) {
         this.jobDescription = jobDescription;
     }
+
+
 }

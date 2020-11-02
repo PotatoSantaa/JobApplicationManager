@@ -18,7 +18,10 @@ public class JobAppController {
 
     @Autowired
     JobService jobService;
-    User user;
+
+
+
+
 
     @GetMapping("/home")
     public HashMap getAllJobApps(){
@@ -52,23 +55,28 @@ public class JobAppController {
 
     // Mappings for Firebase database
     @GetMapping("/getJob")
-    public JobApp getJob(@RequestParam String jobId) throws InterruptedException, ExecutionException {
+    public JobApp getJob(@RequestParam String jobId) throws InterruptedException, ExecutionException, FirebaseAuthException {
+
+
+
         return jobService.getJob(jobId);
     }
 
     @PostMapping("/createJob")
     public String createJob(@RequestBody JobApp job) throws InterruptedException, ExecutionException, FirebaseAuthException {
-        User user = new User();
-        return jobService.addJob(job, user);
+
+        return jobService.addJob(job);
     }
 
     @PutMapping("/updateJob")
-    public String updateJob(@RequestBody JobApp job) throws InterruptedException, ExecutionException {
+    public String updateJob(@RequestBody JobApp job) throws InterruptedException, ExecutionException, FirebaseAuthException {
+
         return jobService.updateJob(job);
     }
 
     @DeleteMapping("/deleteJob")
-    public String deleteJob(@RequestParam String jobId) throws InterruptedException, ExecutionException {
+    public String deleteJob(@RequestParam String jobId) throws InterruptedException, ExecutionException, FirebaseAuthException {
+
         return jobService.deleteJob(jobId);
     }
 
