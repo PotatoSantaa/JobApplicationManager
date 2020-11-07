@@ -18,7 +18,7 @@ body {
   .UserDashboard {
     width: 90%;
     max-width: 700px;
-    margin: 2em auto;
+    margin: 20px 0px 0px 105px;
   }
   p.lorem-text {
     text-align: justify;

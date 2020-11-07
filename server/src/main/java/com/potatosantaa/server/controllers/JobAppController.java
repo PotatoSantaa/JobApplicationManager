@@ -26,7 +26,7 @@ public class JobAppController {
 
 
     @GetMapping("/home")
-    public HashMap getAllJobApps(){
+    public Object[] getAllJobApps(){
         return jobService.getAllJobApps();
     }
 

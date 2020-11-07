@@ -7,14 +7,14 @@ public class JobApp {
     private String jobTitle;
     private String company;
     private String jobDescription;
-    private boolean haveApplied;
+    private String haveApplied;
 
 
     public JobApp(){
         
     }
 
-    public JobApp(String jobID, String jobTitle, String company, String jobDescription, boolean haveApplied) {
+    public JobApp(String jobID, String jobTitle, String company, String jobDescription, String haveApplied) {
         super();
         this.jobID = jobID;
         this.jobTitle = jobTitle;
@@ -31,11 +31,11 @@ public class JobApp {
         this.jobID = jobID;
     }
 
-    public boolean isHaveApplied() {
+    public String isHaveApplied() {
         return haveApplied;
     }
 
-    public void setHaveApplied(boolean haveApplied) {
+    public void setHaveApplied(String haveApplied) {
         this.haveApplied = haveApplied;
     }
 
