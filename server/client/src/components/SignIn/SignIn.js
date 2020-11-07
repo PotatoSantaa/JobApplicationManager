@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useCookies } from 'react-cookie';
 
 import { API } from './API';
 
@@ -10,20 +11,27 @@ import Container from '@material-ui/core/Container'
 
 const Auth = () => {
     const styles = useStyles();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [token, setToken, deleteToken] = useCookies(['usr-token']);  
+
     const [ isLoginView, setIsLoginView ] = useState(true);
     const [invalidMessage, setInvalidMessage] = useState(false);
     
+    useEffect(() => {
+        console.log(token);
+        if(token['usr-token']) window.location.href = '/dashboard';
+    }, [token]);
 
     const loginClicked = () => {
-        let basicAuthToken = 'Basic ' + window.btoa(email + ":" + password);
-     
-        API.loginUser(basicAuthToken)
-        .then( () => {
-            setInvalidMessage(false);
-            window.location.href = '/task';
-        })
+        // Fix bearer token
+        API.loginUser({email, password}, token['usr-token'])
+        .then(resp => setToken('usr-token', resp.token))
+        // .then( () => {
+        //     setInvalidMessage(false);
+        //     window.location.href = '/dashboard';
+        // })
         .catch( (error) => {
             setInvalidMessage(true);
             console.log(error);
@@ -34,6 +42,9 @@ const Auth = () => {
         console.log("registered");
     };
 
+    const logoutUser = () => {
+        deleteToken(['usr-token']);
+    };
    
 
     return (

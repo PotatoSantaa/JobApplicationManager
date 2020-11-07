@@ -6,12 +6,14 @@ import com.potatosantaa.server.profiles.JobApp;
 import com.potatosantaa.server.profiles.User;
 import com.potatosantaa.server.services.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.*;
 import java.util.concurrent.ExecutionException;
 
 import java.util.HashMap;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/jobapp")
 public class JobAppController {
@@ -24,7 +26,7 @@ public class JobAppController {
 
 
     @GetMapping("/home")
-    public HashMap getAllJobApps(){
+    public Object[] getAllJobApps(){
         return jobService.getAllJobApps();
     }
 

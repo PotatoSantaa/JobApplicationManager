@@ -4,7 +4,7 @@ import com.potatosantaa.server.profiles.JobApp;
 import com.potatosantaa.server.profiles.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-// import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 // import java.util.List;
 // import java.util.function.Predicate;
@@ -29,10 +29,10 @@ public class JobService {
 
     private HashMap<String, JobApp> listOfJobApps = new HashMap<String, JobApp>() {
         {
-            put("10000", new JobApp("10000", "Software Engineer", "Google", "Code some stuff.", true));
-            put("10001",new JobApp("10001","Software Engineer", "Amazon", "Do things.", true));
-            put("10002",new JobApp("10002","Software Developer", "Northrop Grumman", "Save the world.", true));
-            put("10003",new JobApp("10003","Software Engineering Intern", "Disney", "Solve problems.", true));
+            put("10000", new JobApp("10000", "Software Engineer", "Google", "Code some stuff.", "true"));
+            put("10001",new JobApp("10001","Software Engineer", "Amazon", "Do things.", "true"));
+            put("10002",new JobApp("10002","Software Developer", "Northrop Grumman", "Save the world.", "true"));
+            put("10003",new JobApp("10003","Software Engineering Intern", "Disney", "Solve problems.", "true"));
         }
     };
 
@@ -51,8 +51,8 @@ public class JobService {
 
 
 
-    public HashMap getAllJobApps(){
-        return listOfJobApps;
+    public Object[] getAllJobApps(){
+        return listOfJobApps.values().toArray();
     }
 
     public JobApp getJobAppById(String id){
