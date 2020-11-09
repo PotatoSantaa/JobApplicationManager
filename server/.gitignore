@@ -35,3 +35,4 @@ build/
 
 # token files for firebase
 jobapplicationmanager.json
+credentials.json

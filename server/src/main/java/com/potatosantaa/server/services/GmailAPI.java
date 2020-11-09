@@ -56,9 +56,10 @@ public class GmailAPI {
     //private static final List<String> SCOPES = Collections.singletonList(GmailScopes.MAIL_GOOGLE_COM);
     private static final List<String> SCOPES = Collections.singletonList(GmailScopes.GMAIL_READONLY);
     private static final String CREDENTIALS_FILE_PATH =
-            System.getProperty("user.dir") + "/src/main/resources/credentials/credentials.json";
+            System.getProperty("user.dir") + "/server/src/main/resources/credentials/credentials.json";
 
     private static final String TOKENS_DIRECTORY_PATH = System.getProperty("user.dir") +
+            File.separator + "server" +
             File.separator + "src" +
             File.separator + "main" +
             File.separator + "resources" +
@@ -82,7 +83,7 @@ public class GmailAPI {
                 .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
                 .setAccessType("offline")
                 .build();
-        LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(9999).build();
+        LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(5500).build();
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
     }
 
@@ -289,4 +290,4 @@ public class GmailAPI {
 
     }
 
-}
+} 

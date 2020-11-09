@@ -2,9 +2,9 @@ package com.potatosantaa.server.services;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.potatosantaa.server.profiles.JobApp;
 import com.potatosantaa.server.profiles.User;
-import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-// import java.util.ArrayList;
+// import java.util.Arrays;
 import java.util.HashMap;
 // import java.util.List;
 // import java.util.function.Predicate;
@@ -39,8 +39,8 @@ public class JobService {
     public JobService() throws FirebaseAuthException {
     }
 
-    public HashMap getAllJobApps(){
-        return listOfJobApps;
+    public Object[] getAllJobApps(){
+        return listOfJobApps.values().toArray();
     }
 
     public JobApp getJobAppById(String id){

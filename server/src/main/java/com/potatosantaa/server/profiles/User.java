@@ -9,15 +9,12 @@ public class User {
     private UserRecord userRecord;
     private static User pointer;
 
-
     public static User getInstance() throws FirebaseAuthException {
         if (pointer == null){
             pointer = new User();
         }
         return pointer;
     }
-
-
 
     private User() throws FirebaseAuthException {
 
@@ -32,10 +29,6 @@ public class User {
         //FirebaseUser currentUser = mAuth.getCurrentUser();
     }
 
-
-
-
-
     public String getUID(){
 
         return userRecord.getUid();
@@ -43,6 +36,4 @@ public class User {
      public String getEmail(){
          return userRecord.getEmail();
      }
-
-
 }
