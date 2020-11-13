@@ -18,7 +18,7 @@ public class CoreNLPJobParser {
         props = new Properties();
         props.setProperty("annotators", "tokenize,ssplit,pos,lemma,ner,regexner");
         final String REGEX_PATH = System.getProperty("user.dir") +
-            File.separator + "server" +
+            //File.separator + "server" +
             File.separator + "src" +
             File.separator + "main" +
             File.separator + "resources" +
@@ -52,66 +52,76 @@ public class CoreNLPJobParser {
 
         // process results
         for (CoreEntityMention em : doc.entityMentions()) {
+            try {
+                if(tempMap.containsKey(em.entityType())){
+                    tempMap.get(em.entityType()).add(em.text());
+
+                    // Count appearance number of em.text()
+                    if(countMap.containsKey(em.text())) {
+                        countMap.replace(em.text(), countMap.get(em.text()) + 1);
+                    }
+                    else {
+                        countMap.put(em.text(), 1);
+                    }
+
+                    // Map em.text() to its probability
+                    probMap.put(em.text(), (Double) em.entityTypeConfidences().values().toArray()[0]);
+
+                    // process DATE
+                    if(em.entityType().equals("DATE")) {
+                        if(!result.containsKey("DATE")){
+                            result.put("DATE", em.sentence().text());
+                        } else {
+                            if(!result.get("DATE").contains(em.sentence().text())){
+                                result.put("DATE", result.get("DATE") + "\n" + em.sentence().text());
+                            }
+                        }
+                    }
+
+                    // process LOCATION
+                    if(em.entityType().equals("LOCATION")) {
+                        if(!result.containsKey("LOCATION")){
+                            result.put("LOCATION", em.sentence().text());
+                        } else {
+                            if(!result.get("LOCATION").contains(em.sentence().text())){
+                                result.put("LOCATION", result.get("LOCATION") + "\n" + em.sentence().text());
+                            }
+                        }
+                    }
+
+                    // process TIME
+                    if(em.entityType().equals("TIME")) {
+                        if(!result.containsKey("TIME")){
+                            result.put("TIME", em.sentence().text());
+                        } else {
+                            if(!result.get("TIME").contains(em.sentence().text())){
+                                result.put("TIME", result.get("TIME") + "\n" + em.sentence().text());
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e){
+                System.out.println(e.toString()); continue;
+            }
+
             // System.out.println("\tdetected entity: \t" + em.text() + "\t" + em.entityType());
             // System.out.println("\tprobability: \t" + em.entityTypeConfidences().values().toArray()[0]);
 
-            if(tempMap.containsKey(em.entityType())){
-                tempMap.get(em.entityType()).add(em.text());
 
-                // Count appearance number of em.text()
-                if(countMap.containsKey(em.text())) {
-                    countMap.replace(em.text(), countMap.get(em.text()) + 1);
-                }
-                else {      
-                    countMap.put(em.text(), 1);
-                }
-
-                // Map em.text() to its probability
-                probMap.put(em.text(), (Double) em.entityTypeConfidences().values().toArray()[0]);
-
-                // process DATE
-                if(em.entityType().equals("DATE")) {
-                    if(!result.containsKey("DATE")){
-                        result.put("DATE", em.sentence().text());
-                    } else {
-                        if(!result.get("DATE").contains(em.sentence().text())){
-                            result.put("DATE", result.get("DATE") + "\n" + em.sentence().text()); 
-                        }
-                    }
-                }
-
-                // process LOCATION
-                if(em.entityType().equals("LOCATION")) {
-                    if(!result.containsKey("LOCATION")){
-                        result.put("LOCATION", em.sentence().text());
-                    } else {
-                        if(!result.get("LOCATION").contains(em.sentence().text())){
-                            result.put("LOCATION", result.get("LOCATION") + "\n" + em.sentence().text()); 
-                        }
-                    }
-                }
-
-                // process TIME
-                if(em.entityType().equals("TIME")) {
-                    if(!result.containsKey("TIME")){
-                        result.put("TIME", em.sentence().text());
-                    } else {
-                        if(!result.get("TIME").contains(em.sentence().text())){
-                            result.put("TIME", result.get("TIME") + "\n" + em.sentence().text()); 
-                        }
-                    }
-                }
-            }   
         }
 
         // process DATE
-        result.put("DATE",result.get("DATE").replaceAll("(?m)(^\\s+|[\\s&&[^\\n]](?=\\s|$)|\\s+\\z)", ""));
+        if (result.get("DATE") != null){
+            result.put("DATE",result.get("DATE").replaceAll("(?m)(^\\s+|[\\s&&[^\\n]](?=\\s|$)|\\s+\\z)", ""));
+        }
+
 
         // process LOCATION
-        result.put("LOCATION",result.get("LOCATION").replaceAll("(?m)(^\\s+|[\\s&&[^\\n]](?=\\s|$)|\\s+\\z)", ""));
+        //result.put("LOCATION",result.get("LOCATION").replaceAll("(?m)(^\\s+|[\\s&&[^\\n]](?=\\s|$)|\\s+\\z)", ""));
 
         // process TIME
-        result.put("LOCATION",result.get("LOCATION").replaceAll("(?m)(^\\s+|[\\s&&[^\\n]](?=\\s|$)|\\s+\\z)", ""));
+        //result.put("LOCATION",result.get("LOCATION").replaceAll("(?m)(^\\s+|[\\s&&[^\\n]](?=\\s|$)|\\s+\\z)", ""));
 
         // process ORGANIZATION
         int tempCount = 0;
@@ -196,5 +206,7 @@ public class CoreNLPJobParser {
         HashMap<String, String> result = myJobParser.parseEmail(str);
 
         System.out.println("Result: " + result);
+        System.out.println();
+        System.out.println(result.get("DATE"));
     }
 }

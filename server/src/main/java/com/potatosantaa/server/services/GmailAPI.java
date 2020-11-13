@@ -36,6 +36,7 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.cloud.FirestoreClient;
 import com.potatosantaa.server.profiles.JobApp;
+import com.potatosantaa.server.profiles.Task;
 import com.potatosantaa.server.profiles.User;
 import io.restassured.path.json.JsonPath;
 import org.codehaus.groovy.util.ListHashMap;
@@ -55,17 +56,29 @@ public class GmailAPI {
      */
     //private static final List<String> SCOPES = Collections.singletonList(GmailScopes.MAIL_GOOGLE_COM);
     private static final List<String> SCOPES = Collections.singletonList(GmailScopes.GMAIL_READONLY);
+//    private static final String CREDENTIALS_FILE_PATH =
+//            System.getProperty("user.dir") + "/server/src/main/resources/credentials/credentials.json";
+//
+//    private static final String TOKENS_DIRECTORY_PATH = System.getProperty("user.dir") +
+//            File.separator + "server" +
+//            File.separator + "src" +
+//            File.separator + "main" +
+//            File.separator + "resources" +
+//            File.separator + "credentials";
+
     private static final String CREDENTIALS_FILE_PATH =
-            System.getProperty("user.dir") + "/server/src/main/resources/credentials/credentials.json";
+            System.getProperty("user.dir") + "/src/main/resources/credentials/credentials.json";
 
     private static final String TOKENS_DIRECTORY_PATH = System.getProperty("user.dir") +
-            File.separator + "server" +
             File.separator + "src" +
             File.separator + "main" +
             File.separator + "resources" +
             File.separator + "credentials";
+
+
     /**
      * Creates an authorized Credential object.
+     *
      * @param HTTP_TRANSPORT The network HTTP Transport.
      * @return An authorized Credential object.
      * @throws IOException If the credentials.json file cannot be found.
@@ -96,6 +109,7 @@ public class GmailAPI {
                 .build();
         return service;
     }
+
     public static List<Message> listMessagesMatchingQuery(Gmail service, String userId,
                                                           String query) throws IOException {
 
@@ -114,12 +128,13 @@ public class GmailAPI {
 
         }
         System.out.println("list length: " + messages.size());
-        for (Message count : messages){
+        for (Message count : messages) {
             System.out.println(count);
         }
 
         return messages;
     }
+
     public static Message getMessage(Gmail service, String userId, List<Message> messages, int index)
             throws IOException {
         Message message = service.users().messages().get(userId, messages.get(index).getId()).execute();
@@ -128,25 +143,28 @@ public class GmailAPI {
 //        System.out.println("------------------------------------");
         return message;
     }
+
     public static List<HashMap<String, String>> getGmailData(String query) {
         try {
             Gmail service = getService();
             List<Message> messages = listMessagesMatchingQuery(service, USER_ID, query);
             List<HashMap<String, String>> hmSet = new ArrayList<>();
-            for (int index = 0; index < messages.size(); index++){
+            for (int index = 0; index < messages.size(); index++) {
                 Message message = getMessage(service, USER_ID, messages, index); //get the first one
                 //messages.set(index, message);
                 JsonPath jp = new JsonPath(message.toString());
                 String subject = jp.getString("payload.headers.find { it.name == 'Subject' }.value");
-
-                String body = new String(Base64.getDecoder().decode(jp.getString("payload.parts[0].body.data").replace('-', '+').replace('_', '/')));
+                String body = "";
+                if (jp.getString("payload.parts[0].body.data") != null) {
+                    body = new String(Base64.getDecoder().decode(jp.getString("payload.parts[0].body.data").replace('-', '+').replace('_', '/')));
+                }
 
 
                 String link = null;
                 String arr[] = body.split("\n");
-                for(String s: arr) {
+                for (String s : arr) {
                     s = s.trim();
-                    if(s.startsWith("http") || s.startsWith("https")) {
+                    if (s.startsWith("http") || s.startsWith("https")) {
                         link = s.trim();
                     }
                 }
@@ -157,7 +175,6 @@ public class GmailAPI {
                 hm.put("link", link);
 
                 hmSet.add(hm);
-
 
 
             }
@@ -235,14 +252,13 @@ public class GmailAPI {
     }
 
 
-
-    public static void firebaseInit(){
+    public static void firebaseInit() {
         try {
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(new ClassPathResource("/jobapplicationmanager.json").getInputStream()))
                     .setDatabaseUrl("https://jobapplicationmanager-6361b.firebaseio.com")
                     .build();
-            if(FirebaseApp.getApps().isEmpty()) { //<--- check with this line
+            if (FirebaseApp.getApps().isEmpty()) { //<--- check with this line
                 FirebaseApp.initializeApp(options);
             }
         } catch (
@@ -251,43 +267,105 @@ public class GmailAPI {
         }
     }
 
+    public HashMap getTasks(JobService jobService) throws FirebaseAuthException, ExecutionException, InterruptedException {
+        firebaseInit(); //idk if we have to do this, but i get an error if we don't
+        //jobService = new JobService();
+        CoreNLPJobParser myParser = new CoreNLPJobParser();
+
+        HashMap<String, Task> listOfTasks = new HashMap<String, Task>();
+
+        for (Object job : jobService.getAllJobApps()) {
+            String companyChecking = ((JobApp) job).getCompany();
+            System.out.println("-------------------------" + companyChecking + "-------------------------");
+            List<HashMap<String, String>> hmSet = getGmailData(companyChecking);
+            for (HashMap hm : hmSet) {
+                //System.out.println(hm.get("body"));
+                try {
+                    HashMap<String, String> result = myParser.parseEmail((String) hm.get("body"));
+                    //System.out.println(result);
+                    if (result.get("DATE") != null || result.get("INTERVIEW_TYPE") != null) { //need to create a new task
+
+                        Task newTask = new Task(((JobApp) job).getJobID(), ((JobApp) job).getCompany(), "", "");
+
+                        System.out.println("=========DATE=========");
+                        if (result.get("DATE") == null) {
+                            System.out.println("Not found.");
+                        } else {
+                            System.out.println(result.get("DATE"));
+                            newTask.setTaskDate(result.get("DATE"));
+                        }
+
+                        System.out.println("=========INTERVIEW TYPE========");
+                        if (result.get("INTERVIEW_TYPE") == null) {
+                            System.out.println("Not found.");
+                        } else {
+                            System.out.println(result.get("INTERVIEW_TYPE"));
+                            newTask.setTaskKeyword(result.get("INTERVIEW_TYPE"));
+                        }
+
+                        listOfTasks.put(newTask.getJobID(), newTask);
+
+                    }
+                }
+                catch(Exception e){
+                    System.out.println(e.toString()); continue;
+                }
+            }
+        }
+        return listOfTasks;
+
+
+    }
+
+
     public static void main(String[] args) throws IOException, GeneralSecurityException, FirebaseAuthException, ExecutionException, InterruptedException {
         //here you choose what to search your gmail for. We want to search for specific companies after a certain day (since the last time i opened app..?)
         //List<HashMap<String, String>> hmSet = getGmailData("from:firebase-noreply@google.com");
         firebaseInit(); //idk if we have to do this, but i get an error if we don't
         JobService jobService = new JobService();
-        JobApp newJob = jobService.getJob(String.valueOf(91210)); //hardcoded a jobID here, eventually want to search through all of a user's job applications
+        CoreNLPJobParser myParser = new CoreNLPJobParser();
 
-        List<HashMap<String, String>> hmSet = getGmailData(newJob.getCompany());
-        //List<HashMap<String, String>> hmSet = getGmailData("from:firebase-noreply@google.com");
+        HashMap<String, Task> listOfTasks = new HashMap<String, Task>();
 
-        for (HashMap hm : hmSet){
-            System.out.println();
-            System.out.println();
-            System.out.println("===================================================");
-            System.out.println(hm.get("subject"));
-            System.out.println("=================");
-            System.out.println(hm.get("body"));
-            System.out.println("=================");
-            System.out.println(hm.get("link"));
+        for (Object job : jobService.getAllJobApps()) {
+            try{
+                String companyChecking = ((JobApp) job).getCompany();
+                System.out.println("-------------------------" + companyChecking + "-------------------------");
+                List<HashMap<String, String>> hmSet = getGmailData(companyChecking);
+                for (HashMap hm : hmSet) {
+                    //System.out.println(hm.get("body"));
+                    HashMap<String, String> result = myParser.parseEmail((String) hm.get("body"));
+                    //System.out.println(result);
+                    if (result.get("DATE") != null || result.get("INTERVIEW_TYPE") != null) { //need to create a new task
 
-            System.out.println("=================");
-            System.out.println("Total count of emails is :"+getTotalCountOfMails());
+                        Task newTask = new Task(((JobApp) job).getJobID(), ((JobApp) job).getCompany(), "", "");
 
-            System.out.println("=================");
-            boolean exist = isMailExist("gmail api test");
-            System.out.println("title exist or not: " + exist);
-            System.out.println("===================================================");
-            System.out.println();
-            System.out.println();
+                        System.out.println("=========DATE=========");
+                        if (result.get("DATE") == null) {
+                            System.out.println("Not found.");
+                        } else {
+                            System.out.println(result.get("DATE"));
+                            newTask.setTaskDate(result.get("DATE"));
+                        }
+
+                        System.out.println("=========INTERVIEW TYPE========");
+                        if (result.get("INTERVIEW_TYPE") == null) {
+                            System.out.println("Not found.");
+                        } else {
+                            System.out.println(result.get("INTERVIEW_TYPE"));
+                            newTask.setTaskKeyword(result.get("INTERVIEW_TYPE"));
+                        }
+
+                        listOfTasks.put(newTask.getJobID(), newTask);
+
+                    }
+
+                }
+            }catch (Exception e){
+                System.out.println("Fail"); continue;
+            }
+
         }
-
-
-
-
-
-
-
     }
 
-} 
+}

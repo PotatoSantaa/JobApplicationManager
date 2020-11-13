@@ -1,7 +1,9 @@
 Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TYPE	O,MISC
 technical challenge	INTERVIEW_TYPE
-coding (challenge|interview)	INTERVIEW_TYPE
-call|phone interview	INTERVIEW_TYPE
+HackerRank	INTERVIEW_TYPE
+Coding (Challenge|Interview|Assessment)	INTERVIEW_TYPE
+coding (challenge|interview|assessment)	INTERVIEW_TYPE
+call|phone|video interview	INTERVIEW_TYPE
 on-site|onsite interview	INTERVIEW_TYPE
 C++|Java|Python|C#|F#|.NET|PHP|Ruby|JavaScript|C|Perl|Go|Golang|R|Swift|Kotlin	PROG_LANG
 Dart|MATLAB|Rust|Scala|Objective C|TypeScript|Unity|Elm	PROG_LANG

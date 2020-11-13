@@ -1,21 +1,20 @@
 package com.potatosantaa.server.services;
+import com.google.cloud.firestore.*;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.potatosantaa.server.profiles.JobApp;
 import com.potatosantaa.server.profiles.User;
 // import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 // import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 // import java.util.List;
 // import java.util.function.Predicate;
 
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
 // import org.springframework.stereotype.Service;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 // CRUD Operations Service
@@ -24,7 +23,7 @@ public class JobService {
 
 
     public final String COL_NAME=  "/jobApps";
-    User user;
+
 
     private HashMap<String, JobApp> listOfJobApps = new HashMap<String, JobApp>() {
         {
@@ -36,14 +35,19 @@ public class JobService {
     };
 
     public JobService() throws FirebaseAuthException {
+
     }
 
-    public Object[] getAllJobApps(){
-        return listOfJobApps.values().toArray();
+
+    public HashMap getAllTasks() throws FirebaseAuthException, ExecutionException, InterruptedException {
+        GmailAPI gmailAPI = new GmailAPI();
+        return gmailAPI.getTasks(this);
     }
+
+
 
     public JobApp getJobAppById(String id){
-      //  Predicate<JobApp> byId = jobApp -> jobApp.getJobID().equals(id);
+        //  Predicate<JobApp> byId = jobApp -> jobApp.getJobID().equals(id);
         return listOfJobApps.get(id);
     }
 
@@ -59,6 +63,26 @@ public class JobService {
         listOfJobApps.remove(id);
     }
 
+    public List getAllJobApps() throws FirebaseAuthException, ExecutionException, InterruptedException {
+        Firestore db = FirestoreClient.getFirestore();
+
+        ApiFuture<QuerySnapshot> future = db.collection("Users/" + User.getInstance().getUID() + COL_NAME).get();
+
+        List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+        List serializedDocs = new ArrayList<>();
+        for (QueryDocumentSnapshot document : documents) {
+            JobApp newJob = null;
+            if(document.exists()){
+                newJob = document.toObject(JobApp.class);
+                serializedDocs.add(newJob);
+            } else{
+                return null;
+            }
+        }
+        System.out.println(serializedDocs.getClass());
+        return serializedDocs;
+    }
+
     public String addJob(JobApp job) throws InterruptedException, ExecutionException, FirebaseAuthException {
         Firestore db = FirestoreClient.getFirestore();
         ApiFuture<WriteResult> writeResult = db.collection("Users/" + User.getInstance().getUID() + COL_NAME).document(job.getJobID()).set(job);
@@ -70,7 +94,7 @@ public class JobService {
         DocumentReference docRef = db.collection("Users/" + User.getInstance().getUID() + COL_NAME).document(jobId);
         ApiFuture<DocumentSnapshot> future = docRef.get();
         DocumentSnapshot doc = future.get();
-        
+
         JobApp newJob = null;
         if(doc.exists()){
             newJob = doc.toObject(JobApp.class);
@@ -78,6 +102,7 @@ public class JobService {
         } else{
             return null;
         }
+
     }
 
     public String updateJob(JobApp job) throws InterruptedException, ExecutionException, FirebaseAuthException {
@@ -92,6 +117,5 @@ public class JobService {
 
         return "Document with Job ID " + jobId + " has been deleted";
     }
-
 
 }
