@@ -3,6 +3,7 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.potatosantaa.server.profiles.JobApp;
 import com.potatosantaa.server.profiles.User;
+
 // import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 // import java.util.Arrays;
@@ -43,8 +44,6 @@ public class JobService {
         GmailAPI gmailAPI = new GmailAPI();
         return gmailAPI.getTasks(this);
     }
-
-
 
     public JobApp getJobAppById(String id){
         //  Predicate<JobApp> byId = jobApp -> jobApp.getJobID().equals(id);

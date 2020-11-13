@@ -1,5 +1,8 @@
 package com.potatosantaa.server.controllers;
 
+import com.google.cloud.firestore.CollectionReference;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.potatosantaa.server.profiles.JobApp;
@@ -53,9 +56,6 @@ public class JobAppController {
     public HashMap getAllTasks() throws FirebaseAuthException, ExecutionException, InterruptedException {
         return jobService.getAllTasks();
     }
-
-
-
 
 
     // Mappings for Firebase database

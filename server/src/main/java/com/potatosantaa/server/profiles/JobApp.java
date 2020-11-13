@@ -10,7 +10,7 @@ public class JobApp {
     private Boolean haveApplied;
 
     public JobApp(){
-        
+
     }
 
     public JobApp(String jobID, String jobTitle, String company, String jobDescription, Boolean haveApplied) {
