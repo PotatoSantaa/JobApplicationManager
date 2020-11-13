@@ -20,14 +20,14 @@ export default function CardList() {
     const [data, setData] = useState([]);
 
     useEffect(() => { 
-        fetch("http://localhost:8080/jobapp/home", {
+        fetch("http://localhost:8080/jobapp/getAllJobs", {
             method: 'GET',
             headers: {
                 'Content-Type' : 'application/json',
                 'Origin' : 'http://localhost:3000',
-                'Authorization' : 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJudSIsImV4cCI6MTYwNDk3MTM1MSwiaWF0IjoxNjA0MzY2NTUxfQ.IjpsOacMSc_6FKOsJhPEcY64H_RfmppoEn7UK4fmPXGQcthA5I4LqFUr4tXBqBxkdNf8B1xMezV-sQMT_c0n7A',
+                'Authorization' : 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJudSIsImV4cCI6MTYwNTkxNTE3NSwiaWF0IjoxNjA1MzEwMzc1fQ.RhgI40rc1CeHkL5i2HwiFvntJKeD4CmoNULYZu1HkNuJ6fS2UHOU_jLXk3Ui75yrsdPoOolwYm_KxStXhVVglg',
             },
-            mode: 'cors',
+            mode: 'no-cors',
         })
         .then(resp => resp.json())
         .then(resp => setData(resp))
