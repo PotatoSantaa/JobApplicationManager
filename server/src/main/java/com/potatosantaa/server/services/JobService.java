@@ -26,7 +26,6 @@ public class JobService {
     public final String COL_NAME=  "/jobApps";
     User user;
 
-
     private HashMap<String, JobApp> listOfJobApps = new HashMap<String, JobApp>() {
         {
             put("10000", new JobApp("10000", "Software Engineer", "Google", "Code some stuff.", true));
@@ -79,7 +78,6 @@ public class JobService {
         } else{
             return null;
         }
-
     }
 
     public String updateJob(JobApp job) throws InterruptedException, ExecutionException, FirebaseAuthException {
