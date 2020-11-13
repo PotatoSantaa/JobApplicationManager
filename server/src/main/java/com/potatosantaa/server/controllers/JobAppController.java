@@ -24,19 +24,13 @@ public class JobAppController {
     @Autowired
     JobService jobService;
 
-
-
-
-
-
-
     @GetMapping("/{id}")
     public JobApp getJobAppById(@PathVariable("id") String jobAppID){
         return jobService.getJobAppById(jobAppID);
     }
 
 
-    
+
     // Mappings for HashMap methods ==> will be deleted later
     @RequestMapping(method = RequestMethod.POST, value = "/jobapp")
     public void addJobApp(@RequestBody JobApp jobApp){
@@ -57,6 +51,12 @@ public class JobAppController {
     public List getAllJobApps() throws FirebaseAuthException, ExecutionException, InterruptedException {
         return jobService.getAllJobApps();
     }
+
+    @GetMapping("/getAllTasks")
+    public HashMap getAllTasks() throws FirebaseAuthException, ExecutionException, InterruptedException {
+        return jobService.getAllTasks();
+    }
+
 
     // Mappings for Firebase database
     @GetMapping("/getJob")
