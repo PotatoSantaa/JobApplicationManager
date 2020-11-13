@@ -8,6 +8,7 @@ import store from "../store";
 import "../../styles/TaskBoard.css";
 
 const TaskBoard = () => {
+
     return (
         <Provider store={store}>
             <Board />
