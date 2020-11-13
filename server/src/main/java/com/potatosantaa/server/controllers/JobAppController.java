@@ -1,5 +1,8 @@
 package com.potatosantaa.server.controllers;
 
+import com.google.cloud.firestore.CollectionReference;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.potatosantaa.server.profiles.JobApp;
@@ -25,10 +28,7 @@ public class JobAppController {
 
 
 
-    @GetMapping("/home")
-    public Object[] getAllJobApps(){
-        return jobService.getAllJobApps();
-    }
+
 
     @GetMapping("/{id}")
     public JobApp getJobAppById(@PathVariable("id") String jobAppID){
@@ -53,7 +53,10 @@ public class JobAppController {
         jobService.deleteJobApp(jobAppID);
     }
 
-
+    @GetMapping("/getAllJobs")
+    public List getAllJobApps() throws FirebaseAuthException, ExecutionException, InterruptedException {
+        return jobService.getAllJobApps();
+    }
 
     // Mappings for Firebase database
     @GetMapping("/getJob")
