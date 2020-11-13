@@ -1,0 +1,100 @@
+Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TYPE	O,MISC
+technical challenge	INTERVIEW_TYPE
+HackerRank	INTERVIEW_TYPE
+Coding (Challenge|Interview|Assessment)	INTERVIEW_TYPE
+coding (challenge|interview|assessment)	INTERVIEW_TYPE
+call|phone|video interview	INTERVIEW_TYPE
+on-site|onsite interview	INTERVIEW_TYPE
+C++|Java|Python|C#|F#|.NET|PHP|Ruby|JavaScript|C|Perl|Go|Golang|R|Swift|Kotlin	PROG_LANG
+Dart|MATLAB|Rust|Scala|Objective C|TypeScript|Unity|Elm	PROG_LANG
+HTML|CSS|Sass|jQuery|Cobol|SQL|TensorFlow|Pytorch	PROG_LANG
+Software (Engineer|Developer|Engineering)	JOB_TITLE		2.0
+Software (Engineer|Developer|Engineering) Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+Software (Engineer|Developer|Engineering) (Part|Full) Time	JOB_TITLE		3.0
+(Operation|Engineering|Systems|Business|Data|Programmer) Analyst	JOB_TITLE		2.0
+(Operation|Engineering|Systems|Business|Data|Programmer) Analyst Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+(Operation|Engineering|Systems|Business|Data|Programmer) Analyst (Part|Full) Time	JOB_TITLE		3.0
+(Hardware|DevOps) Engineer	JOB_TITLE		2.0
+(Hardware|DevOps) Engineer Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+(Hardware|DevOps) Engineer (Part|Full) Time	JOB_TITLE		3.0
+Data (Scientist|Engineering|Engineer)	JOB_TITLE		2.0
+Data (Scientist|Engineering|Engineer) Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+Data (Scientist|Engineering|Engineer) (Part|Full) Time	JOB_TITLE		3.0
+Software Tester	JOB_TITLE		2.0
+Software Tester Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+Software Tester (Part|Full) Time	JOB_TITLE		3.0
+(Web|Website|Full-stack|Frontend|Front-end|Backend|Back-end) Developer	JOB_TITLE		2.0
+(Web|Website|Full-stack|Frontend|Front-end|Backend|Back-end) Developer Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+(Web|Website|Full-stack|Frontend|Front-end|Backend|Back-end) Developer (Part|Full) Time	JOB_TITLE		3.0
+Full Stack Developer	JOB_TITLE		2.0
+Full Stack Developer Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+Full Stack Developer (Part|Full) Time	JOB_TITLE		3.0
+Front End Developer	JOB_TITLE		2.0
+Front End Developer Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+Front End Developer (Part|Full) Time	JOB_TITLE		3.0
+Back End Developer	JOB_TITLE		2.0
+Back End Developer Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+Back End Developer (Part|Full) Time	JOB_TITLE		3.0
+(Product|Engineering) Manager	JOB_TITLE		2.0
+(Product|Engineering) Manager Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+(Product|Engineering) Manager (Part|Full) Time	JOB_TITLE		3.0
+Network Architect	JOB_TITLE		2.0
+Network Architect Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+Network Architect (Part|Full) Time	JOB_TITLE		3.0
+(UI|UX|Graphic) Design	JOB_TITLE		2.0
+(UI|UX|Graphic) Design Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+(UI|UX|Graphic) Design (Part|Full) Time	JOB_TITLE		3.0
+(Database|System|Systems) (Administrator|Engineer)	JOB_TITLE		2.0
+(Database|System|Systems) (Administrator|Engineer) Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+(Database|System|Systems) (Administrator|Engineer) (Part|Full) Time	JOB_TITLE		3.0
+Cloud Computing Engineer	JOB_TITLE		2.0
+Cloud Computing Engineer Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+Cloud Computing Engineer (Part|Full) Time	JOB_TITLE		3.0
+Information security analyst	JOB_TITLE		2.0
+Information security analyst Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+Information security analyst (Part|Full) Time	JOB_TITLE		3.0
+Information technology specialist	JOB_TITLE		2.0
+Information technology specialist Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+Information technology specialist (Part|Full) Time	JOB_TITLE		3.0
+Product (Manager|Design)	JOB_TITLE		2.0
+Product (Manager|Design) Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+Product (Manager|Design) (Part|Full) Time	JOB_TITLE		3.0
+DevOps Engineer	JOB_TITLE		2.0
+DevOps Engineer Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+DevOps Engineer (Part|Full) Time	JOB_TITLE		3.0
+(AI|ML) (Engineer|Researcher)	JOB_TITLE		2.0
+(AI|ML) (Engineer|Researcher) Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+(AI|ML) (Engineer|Researcher) (Part|Full) Time	JOB_TITLE		3.0
+Machine Learning (Engineer|Researcher)	JOB_TITLE		2.0
+Machine Learning (Engineer|Researcher) Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+Machine Learning (Engineer|Researcher) (Part|Full) Time	JOB_TITLE		3.0
+Computer Scientist	JOB_TITLE		2.0
+Computer Scientist Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+Computer Scientist (Part|Full) Time	JOB_TITLE		3.0
+Computer Science (Researcher|Professor|Tutor)	JOB_TITLE		2.0
+Computer Science (Researcher|Professor|Tutor) Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+Computer Science (Researcher|Professor|Tutor) (Part|Full) Time	JOB_TITLE		3.0
+(Mobile|Game) Developer	JOB_TITLE		2.0
+(Mobile|Game) Developer Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+(Mobile|Game) Developer (Part|Full) Time	JOB_TITLE		3.0
+Network (Administrator|Engineer)	JOB_TITLE		2.0
+Network (Administrator|Engineer) Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+Network (Administrator|Engineer) (Part|Full) Time	JOB_TITLE		3.0
+Data	JOB_TITLE		2.0
+Data Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+Data (Part|Full) Time	JOB_TITLE		3.0
+(QA|Q&A) Tester	JOB_TITLE		2.0
+(QA|Q&A) Tester Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+(QA|Q&A) Tester (Part|Full) Time	JOB_TITLE		3.0
+(IT|Programmer)	JOB_TITLE		2.0
+(IT|Programmer) Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+(IT|Programmer) (Part|Full) Time	JOB_TITLE		3.0
+(Android|iOS|macOS) (Developer|Engineer)	JOB_TITLE		2.0
+(Android|iOS|macOS) (Developer|Engineer) Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+(Android|iOS|macOS) (Developer|Engineer) (Part|Full) Time	JOB_TITLE		3.0
+Big Data Engineer	JOB_TITLE		2.0
+Big Data Engineer Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+Big Data Engineer (Part|Full) Time	JOB_TITLE		3.0
+Machine Learning Software Engineer	JOB_TITLE		2.0
+Machine Learning Software Engineer Part-Time|Full-Time|Part-time|Full-time|Intern|Internship	JOB_TITLE		3.0
+Machine Learning Software Engineer (Part|Full) Time	JOB_TITLE		3.0

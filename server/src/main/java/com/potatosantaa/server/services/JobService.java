@@ -3,8 +3,10 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.potatosantaa.server.profiles.JobApp;
 import com.potatosantaa.server.profiles.User;
-import org.springframework.stereotype.Service;
 
+// import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+// import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashMap;
 // import java.util.List;
@@ -38,10 +40,13 @@ public class JobService {
     }
 
 
-
+    public HashMap getAllTasks() throws FirebaseAuthException, ExecutionException, InterruptedException {
+        GmailAPI gmailAPI = new GmailAPI();
+        return gmailAPI.getTasks(this);
+    }
 
     public JobApp getJobAppById(String id){
-      //  Predicate<JobApp> byId = jobApp -> jobApp.getJobID().equals(id);
+        //  Predicate<JobApp> byId = jobApp -> jobApp.getJobID().equals(id);
         return listOfJobApps.get(id);
     }
 
