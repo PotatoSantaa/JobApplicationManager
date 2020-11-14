@@ -1,10 +1,11 @@
 export class API {
-    static loginUser(basicAuthToken) {
-        return fetch(`${process.env.SPRING_APP_API_URL}/auth/basicauth`, {
-            method: 'GET',
+    static loginUser(body, token) {
+        return fetch(`${process.env.SPRING_APP_API_URL}/authenticate`, {
+            method: 'POST',
             headers: {
-                'Authorization': `${basicAuthToken}`
+                'Content-Type' : 'application/json',        
             },
+            body: JSON.stringify(body)
         }).then( resp => resp.json())
     }
 

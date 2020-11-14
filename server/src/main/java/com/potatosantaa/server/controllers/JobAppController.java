@@ -1,17 +1,22 @@
 package com.potatosantaa.server.controllers;
 
+import com.google.cloud.firestore.CollectionReference;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.potatosantaa.server.profiles.JobApp;
 import com.potatosantaa.server.profiles.User;
 import com.potatosantaa.server.services.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.*;
 import java.util.concurrent.ExecutionException;
 
 import java.util.HashMap;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/jobapp")
 public class JobAppController {
@@ -19,22 +24,13 @@ public class JobAppController {
     @Autowired
     JobService jobService;
 
-
-
-
-
-    @GetMapping("/home")
-    public HashMap getAllJobApps(){
-        return jobService.getAllJobApps();
-    }
-
     @GetMapping("/{id}")
     public JobApp getJobAppById(@PathVariable("id") String jobAppID){
         return jobService.getJobAppById(jobAppID);
     }
 
 
-    
+
     // Mappings for HashMap methods ==> will be deleted later
     @RequestMapping(method = RequestMethod.POST, value = "/jobapp")
     public void addJobApp(@RequestBody JobApp jobApp){
@@ -51,6 +47,15 @@ public class JobAppController {
         jobService.deleteJobApp(jobAppID);
     }
 
+    @GetMapping("/getAllJobs")
+    public List getAllJobApps() throws FirebaseAuthException, ExecutionException, InterruptedException {
+        return jobService.getAllJobApps();
+    }
+
+    @GetMapping("/getAllTasks")
+    public HashMap getAllTasks() throws FirebaseAuthException, ExecutionException, InterruptedException {
+        return jobService.getAllTasks();
+    }
 
 
     // Mappings for Firebase database

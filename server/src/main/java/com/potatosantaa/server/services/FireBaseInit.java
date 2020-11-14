@@ -5,25 +5,19 @@ import com.google.firebase.FirebaseOptions;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.net.URL;
 
 @Service
 public class FireBaseInit {
     @PostConstruct
     public void initialize(){
         try{
-            FileInputStream serviceAccount;
-
-            if(System.getProperty("user.dir").contains("server")){
-                serviceAccount = new FileInputStream(System.getProperty("user.dir") + "/src/main/resources/jobapplicationmanager.json");
-
-            }
-            else {
-                serviceAccount = new FileInputStream(System.getProperty("user.dir") + "/server/src/main/resources/jobapplicationmanager.json");
-            }
+            System.out.println(this.getClass().getResourceAsStream("/jobapplicationmanager.json"));
             FirebaseOptions options = FirebaseOptions.builder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                .setCredentials(GoogleCredentials.fromStream(this.getClass().getResourceAsStream("/jobapplicationmanager.json")))
                 .setDatabaseUrl("https://jobapplicationmanager-6361b.firebaseio.com")
                 .build();
 

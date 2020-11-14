@@ -7,10 +7,16 @@ import com.google.firebase.auth.UserRecord;
 public class User {
     private FirebaseAuth mAuth;
     private UserRecord userRecord;
+    private static User pointer;
 
+    public static User getInstance() throws FirebaseAuthException {
+        if (pointer == null){
+            pointer = new User();
+        }
+        return pointer;
+    }
 
-
-    public User() throws FirebaseAuthException {
+    private User() throws FirebaseAuthException {
 
         mAuth = FirebaseAuth.getInstance();
         //-----IF YOU WANT TO CREATE A NEW USER, UNCOMMENT CODE BELOW-----
@@ -23,10 +29,6 @@ public class User {
         //FirebaseUser currentUser = mAuth.getCurrentUser();
     }
 
-
-
-
-
     public String getUID(){
 
         return userRecord.getUid();
@@ -34,6 +36,4 @@ public class User {
      public String getEmail(){
          return userRecord.getEmail();
      }
-
-
 }
