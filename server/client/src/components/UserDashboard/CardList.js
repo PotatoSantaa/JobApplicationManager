@@ -25,7 +25,6 @@ export default function CardList() {
             headers: {
                 'Content-Type' : 'application/json',
                 'Origin' : 'http://localhost:3000',
-                'Authorization' : 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJudSIsImV4cCI6MTYwNTkxNTE3NSwiaWF0IjoxNjA1MzEwMzc1fQ.RhgI40rc1CeHkL5i2HwiFvntJKeD4CmoNULYZu1HkNuJ6fS2UHOU_jLXk3Ui75yrsdPoOolwYm_KxStXhVVglg',
             },
             mode: 'no-cors',
         })
