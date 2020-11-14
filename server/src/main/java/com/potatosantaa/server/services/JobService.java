@@ -25,7 +25,6 @@ public class JobService {
 
     public final String COL_NAME=  "/jobApps";
 
-
     private HashMap<String, JobApp> listOfJobApps = new HashMap<String, JobApp>() {
         {
             put("10000", new JobApp("10000", "Software Engineer", "Google", "Code some stuff.", true));
@@ -50,15 +49,15 @@ public class JobService {
         return listOfJobApps.get(id);
     }
 
-    public void addJobApp(JobApp jobApp){
+    public void addJobApp(JobApp jobApp) {
         listOfJobApps.put(jobApp.getJobID(), jobApp);
     }
 
-    public void updateJobApp(JobApp jobApp, String id){
+    public void updateJobApp(JobApp jobApp, String id) {
         listOfJobApps.put(id, jobApp);
     }
 
-    public void deleteJobApp(String id){
+    public void deleteJobApp(String id) {
         listOfJobApps.remove(id);
     }
 
@@ -95,10 +94,10 @@ public class JobService {
         DocumentSnapshot doc = future.get();
 
         JobApp newJob = null;
-        if(doc.exists()){
+        if (doc.exists()) {
             newJob = doc.toObject(JobApp.class);
             return newJob;
-        } else{
+        } else {
             return null;
         }
 
