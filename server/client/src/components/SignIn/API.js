@@ -1,6 +1,6 @@
 export class API {
     static loginUser(body, token) {
-        return fetch(`${process.env.SPRING_APP_API_URL}/authenticate`, {
+        return fetch(`${process.env.REACT_APP_API_URL}/authenticate`, {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json',        

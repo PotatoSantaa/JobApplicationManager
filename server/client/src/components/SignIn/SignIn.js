@@ -19,32 +19,29 @@ const Auth = () => {
     const [ isLoginView, setIsLoginView ] = useState(true);
     const [invalidMessage, setInvalidMessage] = useState(false);
     
-    useEffect(() => {
-        console.log(token);
-        if(token['usr-token']) window.location.href = '/dashboard';
-    }, [token]);
+    // useEffect(() => {
+    //     console.log(token);
+    //     if(token['usr-token']) window.location.href = '/dashboard';
+    // }, [token]);
 
     const loginClicked = () => {
         // Fix bearer token
-        API.loginUser({email, password}, token['usr-token'])
-        .then(resp => setToken('usr-token', resp.token))
-        // .then( () => {
-        //     setInvalidMessage(false);
-        //     window.location.href = '/dashboard';
-        // })
-        .catch( (error) => {
+        // API.loginUser({email, password}, token['usr-token'])
+        // .then(resp => setToken('usr-token', resp.token))
+        if(email !== null && password !== null) {
+            setInvalidMessage(false);
+            window.location.href = '/dashboard';
+        } 
+       else {
             setInvalidMessage(true);
             console.log(error);
-        })    
+        }    
     };
 
     const registerClicked = () => {
         console.log("registered");
     };
 
-    const logoutUser = () => {
-        deleteToken(['usr-token']);
-    };
    
 
     return (

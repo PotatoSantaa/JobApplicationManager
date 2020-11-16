@@ -20,13 +20,12 @@ export default function CardList() {
     const [data, setData] = useState([]);
 
     useEffect(() => { 
-        fetch("http://localhost:8080/jobapp/getAllJobs", {
+        fetch(`${process.env.REACT_APP_API_URL}/jobapp/getAllJobs`, {
             method: 'GET',
             headers: {
                 'Content-Type' : 'application/json',
-                'Origin' : 'http://localhost:3000',
+                // 'Origin' : 'http://localhost:3000',
             },
-            mode: 'no-cors',
         })
         .then(resp => resp.json())
         .then(resp => setData(resp))
@@ -44,7 +43,7 @@ export default function CardList() {
                 alignItems="flex-start"
             >
                 {data.map(elem => (
-                    <Grid item  style={{ minWidth: "20em", minHeight: "20em"}} sm={6} key={data.indexOf(elem)}>
+                    <Grid  item style={{ minWidth: "20em", minHeight: "20em"}} xs={6} sm={3}  key={data.indexOf(elem)}>
                         <Card>
                             <CardHeader
                                 title={`${elem.jobTitle} at ${elem.company}`}

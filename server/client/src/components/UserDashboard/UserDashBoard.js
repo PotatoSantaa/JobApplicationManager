@@ -35,20 +35,15 @@ const UserDashboard = () => {
 
     useEffect(() => {
         if(isSubmitted) {
-           fetch("http://localhost:8080/jobapp/createJob", {
+           fetch(`${process.env.REACT_APP_API_URL}/jobapp/createJob`, {
                 method: 'POST',
                 headers: {
                     'Content-Type' : 'application/json',
-                    'Origin' : 'http://localhost:3000',
-                    'Authorization' : 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJudSIsImV4cCI6MTYwNTkxNTE3NSwiaWF0IjoxNjA1MzEwMzc1fQ.RhgI40rc1CeHkL5i2HwiFvntJKeD4CmoNULYZu1HkNuJ6fS2UHOU_jLXk3Ui75yrsdPoOolwYm_KxStXhVVglg',
+                    // 'Origin' : 'http://localhost:3000',
                 },
-                mode: 'cors',
-                body: JSON.stringify({jobID, jobTitle, company, jobDescription, haveApplied})
+                body: JSON.stringify({jobID: jobID, jobTitle: jobTitle , company: company, jobDescription : jobDescription , haveApplied : haveApplied})
             })
-            .then(resp => {
-                resp.text();
-                return;
-            })
+            .then(resp => resp.json)
             .catch(err => console.log(err))
         }
     }, [isSubmitted]);
