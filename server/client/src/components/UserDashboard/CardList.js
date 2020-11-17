@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default function CardList() {
+const CardList = ({ onClick }) => {
     const classes = useStyles()
     const [data, setData] = useState([]);
 
@@ -72,7 +72,7 @@ export default function CardList() {
                                                 </Typography>
                                             </CardContent>
                                             <CardActions disableSpacing>
-                                                <Link to={`${url}/${elem.jobID}`}> more details</Link>                
+                                                <Link to={`${url}/${elem.jobID}`} onClick={onClick}> more details</Link>                
                                             </CardActions>
                                         </Card>
                                     </Grid>
@@ -90,3 +90,5 @@ export default function CardList() {
         </Router>  
     );
 }
+
+export default CardList;

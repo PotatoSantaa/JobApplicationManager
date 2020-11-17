@@ -11,29 +11,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Reminder = () => {
+const Reminder = ({ jobID }) => {
   const classes = useStyles();
 
-  const [reminder, setReminder] = useState([]);
+  const [reminder, setReminder] = useState('none');
+  const [keyword, setKeyword] = useState('task');
 
   useEffect(() => {
       
-        fetch(`${process.env.REACT_APP_API_URL}/jobapp/getAllTasks`, {
+        fetch(`${process.env.REACT_APP_API_URL}/jobapp/getTask/${jobID}`, {
             method: 'GET',
-            headers: {
-                'Content-Type' : 'application/json',
-                'Origin' : 'http://localhost:3000'
-            },
         })
         .then(resp => resp.json())
-        .then(resp => setReminder(resp))
+        .then(resp => {
+          setReminder(resp);
+          setKeyword(resp.taskKeyword)
+        })
         .catch(err => console.log(err))
         
     }, []);
 
   return (
     <div className={classes.root}>
-      <Alert severity="warning">@Twilio's coding assessment: "We are currently experiencing high\nvolumes so please allow 2-3 weeks to follow up regarding application\nstatus.\nYou have been invited to attend the test *University Recruiting for Summer\n2021 SWE Tests (B) " </Alert>
+      {reminder === 'none' ? 
+        null :  <Alert severity="warning">REMINDER {reminder.company}'s {keyword}: "{reminder.taskDate}" </Alert>
+      }  
     </div>
   );
 }
