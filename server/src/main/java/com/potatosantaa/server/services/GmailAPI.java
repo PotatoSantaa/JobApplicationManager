@@ -56,6 +56,7 @@ public class GmailAPI {
      */
     //private static final List<String> SCOPES = Collections.singletonList(GmailScopes.MAIL_GOOGLE_COM);
     private static final List<String> SCOPES = Collections.singletonList(GmailScopes.GMAIL_READONLY);
+    private static final String TASK_NAME=  "/tasks";
 //    private static final String CREDENTIALS_FILE_PATH =
 //            System.getProperty("user.dir") + "/server/src/main/resources/credentials/credentials.json";
 //
@@ -271,13 +272,15 @@ public class GmailAPI {
         firebaseInit(); //idk if we have to do this, but i get an error if we don't
         //jobService = new JobService();
         CoreNLPJobParser myParser = new CoreNLPJobParser();
+        Firestore db = FirestoreClient.getFirestore();
+
 
         HashMap<String, Task> listOfTasks = new HashMap<String, Task>();
 
         for (Object job : jobService.getAllJobApps()) {
             String companyChecking = ((JobApp) job).getCompany();
             System.out.println("-------------------------" + companyChecking + "-------------------------");
-            List<HashMap<String, String>> hmSet = getGmailData(companyChecking);
+            List<HashMap<String, String>> hmSet = getGmailData("newer_than:1d "  + companyChecking);
             for (HashMap hm : hmSet) {
                 //System.out.println(hm.get("body"));
                 try {
@@ -304,6 +307,8 @@ public class GmailAPI {
                         }
 
                         listOfTasks.put(newTask.getJobID(), newTask);
+                        ApiFuture<WriteResult> writeResult = db.collection("Users/" + User.getInstance().getUID() + TASK_NAME).document(newTask.getJobID()).set(newTask);
+
 
                     }
                 }
@@ -324,14 +329,14 @@ public class GmailAPI {
         firebaseInit(); //idk if we have to do this, but i get an error if we don't
         JobService jobService = new JobService();
         CoreNLPJobParser myParser = new CoreNLPJobParser();
+        Firestore db = FirestoreClient.getFirestore();
 
         HashMap<String, Task> listOfTasks = new HashMap<String, Task>();
 
         for (Object job : jobService.getAllJobApps()) {
             try{
                 String companyChecking = ((JobApp) job).getCompany();
-                System.out.println("-------------------------" + companyChecking + "-------------------------");
-                List<HashMap<String, String>> hmSet = getGmailData(companyChecking);
+                List<HashMap<String, String>> hmSet = getGmailData("newer_than:1d "  + companyChecking);
                 for (HashMap hm : hmSet) {
                     //System.out.println(hm.get("body"));
                     HashMap<String, String> result = myParser.parseEmail((String) hm.get("body"));
@@ -357,12 +362,14 @@ public class GmailAPI {
                         }
 
                         listOfTasks.put(newTask.getJobID(), newTask);
+                        System.out.println("Users/" + User.getInstance().getUID() + TASK_NAME + "11-12-20");
+                        ApiFuture<WriteResult> writeResult = db.collection("Users/" + User.getInstance().getUID() + TASK_NAME).document(newTask.getJobID()).set(newTask);
 
                     }
 
                 }
             }catch (Exception e){
-                System.out.println("Fail"); continue;
+                System.out.println(e.toString()); continue;
             }
 
         }

@@ -6,6 +6,7 @@ import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.potatosantaa.server.profiles.JobApp;
+import com.potatosantaa.server.profiles.Task;
 import com.potatosantaa.server.profiles.User;
 import com.potatosantaa.server.services.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,15 +52,26 @@ public class JobAppController {
     }
 
     @GetMapping("/getAllTasks")
-    public HashMap getAllTasks() throws FirebaseAuthException, ExecutionException, InterruptedException {
+    public List getAllTasks() throws FirebaseAuthException, ExecutionException, InterruptedException {
         return jobService.getAllTasks();
     }
 
+
+    @GetMapping("/getTask")
+    public Task getTask(@RequestParam String jobId) throws InterruptedException, ExecutionException, FirebaseAuthException {
+        return jobService.getTask(jobId);
+    }
+
+    @DeleteMapping("/deleteTask")
+    public String deleteTask(@RequestParam String jobId) throws InterruptedException, ExecutionException, FirebaseAuthException {
+
+        return jobService.deleteTask(jobId);
+    }
+
+
     // Mappings for Firebase database
     @GetMapping("/getJob")
-    public JobApp getJob(@RequestParam String jobId)
-            throws InterruptedException, ExecutionException, FirebaseAuthException {
-
+    public JobApp getJob(@RequestParam String jobId) throws InterruptedException, ExecutionException, FirebaseAuthException {
         return jobService.getJob(jobId);
     }
 
