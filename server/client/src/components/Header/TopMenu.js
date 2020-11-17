@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 /** icons */
-import PersonPinIcon from '@material-ui/icons/PersonPin';
+import AppsIcon from '@material-ui/icons/Apps';
 
 const useStyles = makeStyles({
     root: {
@@ -19,17 +19,9 @@ const useStyles = makeStyles({
 /** modify the tab items here */
 const tabs = [
     {
-        icon: <PersonPinIcon />,
-        ariaLabel:"person"
+        icon: <AppsIcon />,
+        ariaLabel:"home"
     },
-    {
-        icon: <PersonPinIcon />,
-        ariaLabel:"person"
-    },
-    {
-        icon: <PersonPinIcon />,
-        ariaLabel:"person"
-    }
 ];
 
 export default function TopMenu() {
@@ -52,6 +44,7 @@ export default function TopMenu() {
                     icon={tab.icon}
                     aria-label={tab.ariaLabel}
                     className={classes.tab}
+                    onClick={() => window.location.href = '/dashboard'}
                 >                    
                 </Tab>
             ))}

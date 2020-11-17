@@ -26,25 +26,23 @@ public class JobAppController {
     JobService jobService;
 
     @GetMapping("/{id}")
-    public JobApp getJobAppById(@PathVariable("id") String jobAppID){
+    public JobApp getJobAppById(@PathVariable("id") String jobAppID) {
         return jobService.getJobAppById(jobAppID);
     }
 
-
-
     // Mappings for HashMap methods ==> will be deleted later
     @RequestMapping(method = RequestMethod.POST, value = "/jobapp")
-    public void addJobApp(@RequestBody JobApp jobApp){
+    public void addJobApp(@RequestBody JobApp jobApp) {
         jobService.addJobApp(jobApp);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/jobapp/{id}")
-    public void updateJobApp(@RequestBody JobApp jobApp, @PathVariable("id") String jobAppID){
+    public void updateJobApp(@RequestBody JobApp jobApp, @PathVariable("id") String jobAppID) {
         jobService.updateJobApp(jobApp, jobAppID);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/jobapp/{id}")
-    public void deleteJobApp(@PathVariable("id") String jobAppID){
+    public void deleteJobApp(@PathVariable("id") String jobAppID) {
         jobService.deleteJobApp(jobAppID);
     }
 
@@ -57,6 +55,7 @@ public class JobAppController {
     public List getAllTasks() throws FirebaseAuthException, ExecutionException, InterruptedException {
         return jobService.getAllTasks();
     }
+
 
     @GetMapping("/getTask")
     public Task getTask(@RequestParam String jobId) throws InterruptedException, ExecutionException, FirebaseAuthException {
@@ -77,19 +76,22 @@ public class JobAppController {
     }
 
     @PostMapping("/createJob")
-    public String createJob(@RequestBody JobApp job) throws InterruptedException, ExecutionException, FirebaseAuthException {
+    public String createJob(@RequestBody JobApp job)
+            throws InterruptedException, ExecutionException, FirebaseAuthException {
 
         return jobService.addJob(job);
     }
 
     @PutMapping("/updateJob")
-    public String updateJob(@RequestBody JobApp job) throws InterruptedException, ExecutionException, FirebaseAuthException {
+    public String updateJob(@RequestBody JobApp job)
+            throws InterruptedException, ExecutionException, FirebaseAuthException {
 
         return jobService.updateJob(job);
     }
 
     @DeleteMapping("/deleteJob")
-    public String deleteJob(@RequestParam String jobId) throws InterruptedException, ExecutionException, FirebaseAuthException {
+    public String deleteJob(@RequestParam String jobId)
+            throws InterruptedException, ExecutionException, FirebaseAuthException {
 
         return jobService.deleteJob(jobId);
     }

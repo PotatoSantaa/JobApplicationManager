@@ -39,7 +39,6 @@ const UserDashboard = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type' : 'application/json',
-                    // 'Origin' : 'http://localhost:3000',
                 },
                 body: JSON.stringify({jobID: jobID, jobTitle: jobTitle , company: company, jobDescription : jobDescription , haveApplied : haveApplied})
             })
