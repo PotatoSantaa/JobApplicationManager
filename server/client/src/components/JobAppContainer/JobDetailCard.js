@@ -29,7 +29,7 @@ const JobDetailCard = ({ jobID }) => {
         .then(resp => resp.json())
         .then(resp => setJobApp(resp))
         .catch(err => console.log(err))
-        
+    // eslint-disable-next-line        
     }, []);
   
     return (

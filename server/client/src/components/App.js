@@ -8,11 +8,12 @@ import Kanban from './KanbanBoard';
 import TaskBoard from './TaskBoard';
 import UserDashboard from './UserDashboard';
 
-import { CookiesProvider } from 'react-cookie'; 
+import { AuthProvider } from './Auth/Auth'
+import PrivateRoute from './Auth/PrivateRoute';
 
 export default function App() {
-  return (
-    <CookiesProvider>
+  return (    
+    <AuthProvider>
       <BrowserRouter>
         <Switch>
           { /* Unauthenticated view */ }
@@ -23,9 +24,11 @@ export default function App() {
           <Route exact path={["/task", "/kanban","/dashboard" ]}>
             <Header/>
               <Switch>
-                  <Route exact path='/dashboard' component={UserDashboard}/> 
-                  <Route exact path='/task' component={TaskBoard}/> 
-                  <Route exact path='/kanban' component={Kanban}/>                                       
+                  {/* PrivateRoute is a custom class that redirects users
+                  to the login page if and only if they are not logged in */}
+                  <PrivateRoute exact path='/dashboard' component={UserDashboard}/> 
+                  <PrivateRoute exact path='/task' component={TaskBoard}/> 
+                  <PrivateRoute exact path='/kanban' component={Kanban}/>                                       
               </Switch>
             <Footer/>                                      
           </Route>
@@ -33,8 +36,8 @@ export default function App() {
           <Route path="*" component={NotFoundPage}/>
 
         </Switch>
-      </BrowserRouter>
-    </CookiesProvider>
+      </BrowserRouter>    
+    </AuthProvider>
   );
 }
 

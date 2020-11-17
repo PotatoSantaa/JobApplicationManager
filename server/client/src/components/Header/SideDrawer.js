@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import app from '../../firebase'
 
 /** styling */
 import clsx from 'clsx';
@@ -84,6 +85,16 @@ export default function SideDrawer({ ...props }) {
     /** detects if screen size reaches below medium */
     const isViewSizeBelowMedium = useMediaQuery(theme.breakpoints.down('md'));
 
+    const handleSignOut = useCallback(async () => {        
+      try {                  
+          await app.auth().signOut();
+          console.log("Signed out")
+          window.location.href = '/';
+      } catch (error) {
+          console.log(`There is an error ${error}`);
+      }
+  }, [])
+
     return (
         <Drawer
             variant="permanent"
@@ -108,7 +119,11 @@ export default function SideDrawer({ ...props }) {
 
           <List>
             {drawerItems.map((item, index) => (
-              <ListItem button key={`${item}${index}`}>
+              <ListItem 
+                button 
+                key={`${item}${index}`}
+                onClick={() => handleSignOut()}
+                >
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.ariaLabel} />
               </ListItem>
@@ -120,7 +135,11 @@ export default function SideDrawer({ ...props }) {
                 <Divider />
                 <List>
                   {tabs.map((tab, index) => (
-                      <ListItem button key={`${tab}${index}`}>
+                      <ListItem 
+                        button 
+                        key={`${tab}${index}`}
+                        onClick={() => handleSignOut()}
+                      >
                         <ListItemIcon>{tab.icon}</ListItemIcon>
                         <ListItemText primary={tab.ariaLabel} />
                       </ListItem>

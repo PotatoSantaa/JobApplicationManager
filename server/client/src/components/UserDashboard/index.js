@@ -1,3 +1,3 @@
-import UserDashboard from './UserDashboard';
+import UserDashboard from './UserDashBoard';
 
 export default UserDashboard;

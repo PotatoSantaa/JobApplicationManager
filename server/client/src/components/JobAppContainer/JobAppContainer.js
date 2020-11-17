@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 const JobAppContainer = ({ match }) => {
 
     const classes = useStyles();
-
+    // eslint-disable-next-line
     const [jobApp, setJobApp] = useState();
   
     return (

@@ -11,6 +11,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "clsx": "^1.1.1",
+    "firebase": "^8.0.2",
     "focus-trap-react": "^8.1.1",
     "ionicons": "^5.2.3",
     "lodash.throttle": "^4.1.1",

@@ -1,51 +1,69 @@
-import React, { useState, useEffect } from 'react';
-import { useCookies } from 'react-cookie';
-
-import { API } from './API';
-
+import React, { useState, useCallback, useContext } from 'react';
+import { Redirect } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container'
-
+import app from '../../firebase'
+import { AuthContext } from '../Auth/Auth'
 
 const Auth = () => {
     const styles = useStyles();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [token, setToken, deleteToken] = useCookies(['usr-token']);  
-
-    const [ isLoginView, setIsLoginView ] = useState(true);
-    const [invalidMessage, setInvalidMessage] = useState(false);
-    
-    // useEffect(() => {
-    //     console.log(token);
-    //     if(token['usr-token']) window.location.href = '/dashboard';
-    // }, [token]);
+    const [isLoginView, setIsLoginView] = useState(true);
+    const [invalidMessage, setInvalidMessage] = useState(false);       
 
     const loginClicked = () => {
-        // Fix bearer token
-        // API.loginUser({email, password}, token['usr-token'])
-        // .then(resp => setToken('usr-token', resp.token))
         if(email !== null && password !== null) {
             setInvalidMessage(false);
-            window.location.href = '/dashboard';
-        } 
-       else {
-            setInvalidMessage(true);
-            console.log(error);
+            handleSignIn()
+        } else {
+            setInvalidMessage(true);            
         }    
     };
 
     const registerClicked = () => {
-        console.log("registered");
+        if(email !== null && password !== null) {
+            setInvalidMessage(false);
+            handleSignUp()
+        } else {
+            setInvalidMessage(true);            
+        } 
     };
 
-   
+    const handleSignUp = useCallback(async () => {        
+        try {
+            console.log(`email is: ${email} and password is: ${password}`)
+            await app.auth().createUserWithEmailAndPassword(email, password);
+            window.location.href = '/dashboard';
+        } catch (error) {
+            console.log(`There is an error ${error}`);
+        }
+    }, [email, password])
+
+    const handleSignIn = useCallback(async () => {        
+        try {
+            await app.auth().signInWithEmailAndPassword(email, password);
+            window.location.href = '/dashboard';
+        } catch (error) {
+            console.log(error);
+        }
+    }, [email, password])    
+
+    const { currentUser } = useContext(AuthContext);
+    
+    if (currentUser) {
+        return <Redirect to="/dashboard"/>
+    }
 
     return (
         <Container maxWidth="md" className={styles.container}>
+                <div>
+                    {JSON.stringify(email)}
+                    {JSON.stringify(password)}
+                </div>
                 <div className={styles.heading}>
                     {isLoginView ?  <h2>Login</h2> : <h2>Signup</h2>}
                     {invalidMessage ? <h5 style= {{ color: 'red' }}>Invalid credentials</h5> : null}
@@ -114,7 +132,5 @@ const useStyles = makeStyles({
         marginTop: '30px',
     },
 });
-
-
 
 export default Auth;

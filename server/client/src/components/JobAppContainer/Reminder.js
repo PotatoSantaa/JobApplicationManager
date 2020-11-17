@@ -29,7 +29,7 @@ const Reminder = ({ jobID }) => {
         })
         .catch(err => console.log(err))
         
-    }, []);
+    }, [jobID]);
 
   return (
     <div className={classes.root}>
