@@ -56,22 +56,29 @@ public class JobAppController {
         return jobService.getAllTasks();
     }
 
-
-    @GetMapping("/getTask")
-    public Task getTask(@RequestParam String jobId) throws InterruptedException, ExecutionException, FirebaseAuthException {
+    @GetMapping("/getTask/{id}")
+    public Task getTask(@PathVariable("id") String jobId)
+            throws InterruptedException, ExecutionException, FirebaseAuthException {
         return jobService.getTask(jobId);
     }
 
     @DeleteMapping("/deleteTask")
-    public String deleteTask(@RequestParam String jobId) throws InterruptedException, ExecutionException, FirebaseAuthException {
+    public String deleteTask(@RequestParam String jobId)
+            throws InterruptedException, ExecutionException, FirebaseAuthException {
 
         return jobService.deleteTask(jobId);
     }
 
-
     // Mappings for Firebase database
-    @GetMapping("/getJob")
-    public JobApp getJob(@RequestParam String jobId) throws InterruptedException, ExecutionException, FirebaseAuthException {
+    // @GetMapping("/getJob")
+    // public JobApp getJob(@RequestParam String jobId)
+    // throws InterruptedException, ExecutionException, FirebaseAuthException {
+    // return jobService.getJob(jobId);
+    // }
+
+    @GetMapping("/getJob/{id}")
+    public JobApp getJob(@PathVariable("id") String jobId)
+            throws InterruptedException, ExecutionException, FirebaseAuthException {
         return jobService.getJob(jobId);
     }
 

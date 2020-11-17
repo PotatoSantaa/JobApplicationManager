@@ -10,6 +10,7 @@ const UserDashboard = () => {
     const triggerText = 'Create Application';
 
     const [isSubmitted, setSubmitted] = useState(false);
+    const [isClicked, setClicked] = useState(false);
     const [jobID, setJobId] = useState('');
     const [jobTitle, setJobTitle] = useState('');
     const [company, setCompany] = useState('');
@@ -32,6 +33,10 @@ const UserDashboard = () => {
         setSubmitted(true);
     });
 
+    const onClick = ((event) => {
+        setClicked(true);
+    })
+
 
     useEffect(() => {
         if(isSubmitted) {
@@ -50,8 +55,8 @@ const UserDashboard = () => {
 
     return (
         <div className="UserDashboard">
-            <Container triggerText={triggerText} onSubmit={onSubmit} />
-            <CardList/>
+            {isClicked ? null :<Container triggerText={triggerText} onSubmit={onSubmit} />}      
+            <CardList onClick={onClick}/>
         </div>
     );
 };
