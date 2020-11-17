@@ -17,9 +17,8 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import PersonPinIcon from '@material-ui/icons/PersonPin';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AppsIcon from '@material-ui/icons/Apps';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -59,36 +58,16 @@ const useStyles = makeStyles((theme) => ({
 /** modify the drawer items here */
 const drawerItems = [
   {
-    icon: <InboxIcon/>,
-    ariaLabel: "item"
-  },
-  {
-    icon: <MailIcon/>,
-    ariaLabel: "item"
-  },
-  {
-    icon: <InboxIcon/>,
-    ariaLabel: "item"
-  },
-  {
-    icon: <MailIcon/>,
-    ariaLabel: "item"
-  },
+    icon: <ExitToAppIcon/>,
+    ariaLabel: "Log out"
+  }
 ]
 
 /** modify the tab items when screen size is below medium here */
 const tabs = [
   {
-      icon: <PersonPinIcon />,
-      ariaLabel:"person"
-  },
-  {
-      icon: <PersonPinIcon />,
-      ariaLabel:"person"
-  },
-  {
-      icon: <PersonPinIcon />,
-      ariaLabel:"person"
+    icon: <AppsIcon />,
+    ariaLabel:"home"
   }
 ];
 
