@@ -6,37 +6,37 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container'
 import app from '../../firebase'
 import { AuthContext } from '../Auth/Auth'
+import { useSnackbar } from 'notistack';
 
 const Auth = () => {
     const styles = useStyles();
+    const { enqueueSnackbar } = useSnackbar();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoginView, setIsLoginView] = useState(true);
-    const [invalidMessage, setInvalidMessage] = useState(false);       
+    const [invalidMessage, setInvalidMessage] = useState(false);        
 
     const loginClicked = () => {
-        if(email !== null && password !== null) {
+        if(validateInput()) {
             setInvalidMessage(false);
             handleSignIn();
         }             
     };
 
     const registerClicked = () => {
-        if(email !== null && password !== null) {
+        if(validateInput()) {
             setInvalidMessage(false);
             handleSignUp();
         }
     };
 
     const handleSignUp = useCallback(async () => {        
-        try {
-            console.log(`email is: ${email} and password is: ${password}`)
+        try {            
             await app.auth().createUserWithEmailAndPassword(email, password);
             window.location.href = '/dashboard';
         } catch (error) {
-            console.log(`There is an error ${error}`);
-            setInvalidMessage(true);
+            showError(error.message);
         }
     }, [email, password])
 
@@ -45,19 +45,29 @@ const Auth = () => {
             await app.auth().signInWithEmailAndPassword(email, password);
             window.location.href = '/dashboard';
         } catch (error) {
-            console.log(error);
-            setInvalidMessage(true);  
+            showError(error.message);
         }
     }, [email, password])    
+
+    const validateInput = () => {
+        return new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g).test(email) 
+                && password.length !== 0
+    }
+
+    const showError = (message) => {
+        enqueueSnackbar(message, { 
+            variant: 'warning',
+        });
+    }
 
     const { currentUser } = useContext(AuthContext);
     
     if (currentUser) {
         return <Redirect to="/dashboard"/>
-    }
+    }    
 
     return (
-        <Container maxWidth="md" className={styles.container}>
+        <Container maxWidth="md" className={styles.container}>                
                 <div className={styles.heading}>
                     {isLoginView ?  <h2>Login</h2> : <h2>Signup</h2>}
                     {invalidMessage ? <h5 style= {{ color: 'red' }}>Invalid credentials</h5> : null}
