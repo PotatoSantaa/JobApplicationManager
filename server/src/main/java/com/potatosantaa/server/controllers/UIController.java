@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 @CrossOrigin
 public class UIController {
 
-    @RequestMapping(value = { "/", "/task", "/dashboard", "limited" })
+    @RequestMapping(value = { "/", "/task", "/dashboard", "/limited" })
     public String index() {
         return "index.html";
     }
