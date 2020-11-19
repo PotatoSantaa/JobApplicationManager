@@ -3,13 +3,14 @@ import React, { useState, useEffect } from 'react';
 import JobAppContainer from '../JobAppContainer';
 
 import { makeStyles } from '@material-ui/core/styles';
-import CardActions from '@material-ui/core/CardActions';
 import {
+    Button,
     Grid,
     Card,
     CardContent,
     Typography,
-    CardHeader
+    CardHeader,
+    CardActions
 } from '@material-ui/core/';
 import {
     BrowserRouter as Router,
@@ -20,11 +21,18 @@ import {
 } from "react-router-dom";
 
 
+
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
         padding: theme.spacing(2)
-    }
+    },
+    card : {
+        height: '200px',  
+    },
+    // cardAction : {
+    //     display: 'flex',
+    // }
 }))
 
 const CardList = ({ onClick }) => {
@@ -32,6 +40,7 @@ const CardList = ({ onClick }) => {
     const [data, setData] = useState([]);
 
     let { url } = useRouteMatch();
+
 
     useEffect(() => { 
         fetch(`${process.env.REACT_APP_API_URL}/jobapp/getAllJobs`, {
@@ -60,19 +69,21 @@ const CardList = ({ onClick }) => {
                                 alignItems="flex-start"
                             >
                                 {data.map(elem => (
-                                    <Grid  item style={{ minWidth: "20em", minHeight: "20em"}} xs={6} sm={3}  key={data.indexOf(elem)}>
-                                        <Card>
+                                    <Grid  item  xs={6} sm={3}  key={data.indexOf(elem)}>
+                                        <Card className={classes.card}>
                                             <CardHeader
                                                 title={`${elem.jobTitle} at ${elem.company}`}
-                                                subheader={`JOB ID ${elem.jobID}`}
+                                               
                                             />
                                             <CardContent>
-                                                <Typography variant="body2" color="textSecondary" component="p">
-                                                    {elem.jobDescription}
+                                                <Typography variant="body2" color="inherit" component="p">
+                                                    {elem.jobDescription.substring(0,50)} ...
                                                 </Typography>
                                             </CardContent>
-                                            <CardActions disableSpacing>
-                                                <Link to={`${url}/${elem.jobID}`} onClick={onClick}> more details</Link>                
+                                            <CardActions className={classes.cardAction} disableSpacing>
+                                                <Button size="small" color="primary">
+                                                    <Link to={`${url}/${elem.jobID}`} onClick={onClick}>LEARN MORE</Link>  
+                                                </Button>                   
                                             </CardActions>
                                         </Card>
                                     </Grid>

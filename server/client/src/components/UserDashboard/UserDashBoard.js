@@ -47,7 +47,7 @@ const UserDashboard = () => {
                 },
                 body: JSON.stringify({jobID: jobID, jobTitle: jobTitle , company: company, jobDescription : jobDescription , haveApplied : haveApplied})
             })
-            .then(resp => resp.json)
+            .then(resp => resp.json())
             .catch(err => console.log(err))
         }
         // eslint-disable-next-line

@@ -5,6 +5,7 @@ import Reminder from './Reminder';
 import JobDetailCard from './JobDetailCard';
 
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
 
@@ -23,11 +24,32 @@ const JobAppContainer = ({ match }) => {
 
     const classes = useStyles();
     // eslint-disable-next-line
-    const [jobApp, setJobApp] = useState();
+
+    const handleDelete = () => {
+      fetch(`${process.env.REACT_APP_API_URL}/jobapp/deleteJob/${match.params.id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type' : 'application/json',
+        },
+      })
+      .then(resp => resp.json())
+      .catch(err => console.log(err));
+      
+      window.location.href = '/dashboard';
+    };
   
     return (
       <div className={classes.root}>
         <Grid container spacing={1}>
+           <Grid  item xs={12}>
+            <Button
+              variant="contained" 
+              color="primary"
+              onClick={handleDelete}
+            >
+              DELETE APPLICATION
+            </Button>
+          </Grid>   
           <Grid style={{marginTop : '15px'}} item xs={12}>
             <Reminder jobID={match.params.id}/>
           </Grid>

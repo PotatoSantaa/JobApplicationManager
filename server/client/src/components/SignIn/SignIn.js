@@ -18,19 +18,15 @@ const Auth = () => {
     const loginClicked = () => {
         if(email !== null && password !== null) {
             setInvalidMessage(false);
-            handleSignIn()
-        } else {
-            setInvalidMessage(true);            
-        }    
+            handleSignIn();
+        }             
     };
 
     const registerClicked = () => {
         if(email !== null && password !== null) {
             setInvalidMessage(false);
-            handleSignUp()
-        } else {
-            setInvalidMessage(true);            
-        } 
+            handleSignUp();
+        }
     };
 
     const handleSignUp = useCallback(async () => {        
@@ -40,6 +36,7 @@ const Auth = () => {
             window.location.href = '/dashboard';
         } catch (error) {
             console.log(`There is an error ${error}`);
+            setInvalidMessage(true);
         }
     }, [email, password])
 
@@ -49,6 +46,7 @@ const Auth = () => {
             window.location.href = '/dashboard';
         } catch (error) {
             console.log(error);
+            setInvalidMessage(true);  
         }
     }, [email, password])    
 
@@ -60,10 +58,6 @@ const Auth = () => {
 
     return (
         <Container maxWidth="md" className={styles.container}>
-                <div>
-                    {JSON.stringify(email)}
-                    {JSON.stringify(password)}
-                </div>
                 <div className={styles.heading}>
                     {isLoginView ?  <h2>Login</h2> : <h2>Signup</h2>}
                     {invalidMessage ? <h5 style= {{ color: 'red' }}>Invalid credentials</h5> : null}
