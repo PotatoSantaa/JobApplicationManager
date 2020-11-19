@@ -6,6 +6,7 @@ import Header from './Header';
 import Footer from './Footer';
 import TaskBoard from './TaskBoard';
 import UserDashboard from './UserDashboard';
+import LimitedAccess from './LimitedAccess';
 
 import { AuthProvider } from './Auth/Auth'
 import PrivateRoute from './Auth/PrivateRoute';
@@ -16,8 +17,9 @@ export default function App() {
       <BrowserRouter>
         <Switch>
           { /* Unauthenticated view */ }
-          <Route exact path={["/"]}>
-              <Route exact path='/' component={SignIn}/>                                     
+          <Route exact path={["/","/limited"]}>
+              <Route exact path='/' component={SignIn}/>   
+              <Route exact path='/limited' component={LimitedAccess}/>                                   
           </Route>
           { /* Authenticated view */ }
           <Route exact path={["/task", "/dashboard" ]}>

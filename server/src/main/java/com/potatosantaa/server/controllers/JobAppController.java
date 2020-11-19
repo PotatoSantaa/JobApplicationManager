@@ -96,8 +96,8 @@ public class JobAppController {
         return jobService.updateJob(job);
     }
 
-    @DeleteMapping("/deleteJob")
-    public String deleteJob(@RequestParam String jobId)
+    @DeleteMapping("/deleteJob/{id}")
+    public String deleteJob(@PathVariable("id") String jobId)
             throws InterruptedException, ExecutionException, FirebaseAuthException {
 
         return jobService.deleteJob(jobId);

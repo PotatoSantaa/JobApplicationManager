@@ -20,6 +20,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AppsIcon from '@material-ui/icons/Apps';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
+
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -61,7 +63,12 @@ const drawerItems = [
   {
     icon: <ExitToAppIcon/>,
     ariaLabel: "Log out"
+  },
+  {
+    icon: <LockOpenIcon/>,
+    ariaLabel: "Premium"
   }
+
 ]
 
 /** modify the tab items when screen size is below medium here */
@@ -122,7 +129,12 @@ export default function SideDrawer({ ...props }) {
               <ListItem 
                 button 
                 key={`${item}${index}`}
-                onClick={() => handleSignOut()}
+                onClick={() => {
+                  if(index === 0) {
+                    console.log(index);
+                    handleSignOut();
+                  } else  window.location.href = '/limited';
+                }}
                 >
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.ariaLabel} />

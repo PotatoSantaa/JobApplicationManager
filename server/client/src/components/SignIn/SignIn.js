@@ -20,19 +20,15 @@ const Auth = () => {
     const loginClicked = () => {
         if(validateInput()) {
             setInvalidMessage(false);
-            handleSignIn()
-        } else {
-            setInvalidMessage(true);            
-        }    
+            handleSignIn();
+        }             
     };
 
     const registerClicked = () => {
         if(validateInput()) {
             setInvalidMessage(false);
-            handleSignUp()
-        } else {
-            setInvalidMessage(true);            
-        } 
+            handleSignUp();
+        }
     };
 
     const handleSignUp = useCallback(async () => {        

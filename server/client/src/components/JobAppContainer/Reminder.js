@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Alert from '@material-ui/lab/Alert';
+import {Alert, AlertTitle} from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,8 +33,15 @@ const Reminder = ({ jobID }) => {
 
   return (
     <div className={classes.root}>
+      <Alert severity="info">
+        <strong>Daily Reminder: </strong>PLEASE RESOLVE TODO LIST TO MAKE ROOM FOR NEW TASKS 
+      </Alert>
       {reminder === 'none' ? 
-        null :  <Alert severity="warning">REMINDER {reminder.company}'s {keyword}: "{reminder.taskDate}" </Alert>
+        null :  
+        <Alert severity="warning">
+          <AlertTitle>New Task Alert</AlertTitle>
+          {reminder.company}'s {keyword}: <strong>{reminder.taskDate}</strong> 
+        </Alert>
       }  
     </div>
   );

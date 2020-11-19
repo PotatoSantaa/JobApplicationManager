@@ -36,7 +36,7 @@ const JobDetailCard = ({ jobID }) => {
         <Card className={classes.card}>
             <CardHeader
                 title={jobApp.jobTitle}
-                subheader={`Apply Status : ${jobApp.haveApplied}`}
+                subheader={`JOB ID ${jobApp.jobID}`}
             />
             <CardContent>
                 <Typography variant="body2" color="inherit" component="p">
