@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import SignIn from './SignIn';
 import Header from './Header';
 import Footer from './Footer';
-import Kanban from './KanbanBoard';
 import TaskBoard from './TaskBoard';
 import UserDashboard from './UserDashboard';
 
@@ -21,14 +20,13 @@ export default function App() {
               <Route exact path='/' component={SignIn}/>                                     
           </Route>
           { /* Authenticated view */ }
-          <Route exact path={["/task", "/kanban","/dashboard" ]}>
+          <Route exact path={["/task", "/dashboard" ]}>
             <Header/>
               <Switch>
                   {/* PrivateRoute is a custom class that redirects users
                   to the login page if and only if they are not logged in */}
-                  <PrivateRoute exact path='/dashboard' component={UserDashboard}/> 
-                  <PrivateRoute exact path='/task' component={TaskBoard}/> 
-                  <PrivateRoute exact path='/kanban' component={Kanban}/>                                       
+                  <PrivateRoute exact path='/task' component={TaskBoard}/>      
+                  <PrivateRoute exact path='/dashboard' component={UserDashboard}/>                                                             
               </Switch>
             <Footer/>                                      
           </Route>
