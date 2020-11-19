@@ -17,7 +17,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.HashMap;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin()
 @RestController
 @RequestMapping("/jobapp")
 public class JobAppController {
