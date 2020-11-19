@@ -28,7 +28,7 @@ const LimitedAccess = () => {
     const [listing, setListing] = useState([]);
 
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_URL}/api/indeed`, {
+        fetch(`/api/indeed`, {
             method: 'GET',
             headers: {
                 'Content-Type' : 'application/json',

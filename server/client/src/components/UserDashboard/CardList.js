@@ -20,7 +20,7 @@ import {
     useRouteMatch
 } from "react-router-dom";
 
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -30,66 +30,101 @@ const useStyles = makeStyles(theme => ({
     card : {
         height: '200px',  
     },
-    // cardAction : {
-    //     display: 'flex',
-    // }
+    loading: {
+        display: 'flex',
+        '& > * + *': {
+          marginLeft: theme.spacing(5),          
+        },
+    },
 }))
 
-const CardList = ({ onClick }) => {
+const CardList = ({...props}) => {
+
+    const {
+        onClick,
+        updateCardList,
+        setUpdateCardList
+    } =  props;
+
     const classes = useStyles()
     const [data, setData] = useState([]);
-
+    const [initialized, setInitialized] = useState(false);
     let { url } = useRouteMatch();
 
+    useEffect(() => {
+        if (!initialized) {
+            getAllJobs();            
+        }
+    }, [initialized, updateCardList])
 
-    useEffect(() => { 
-        fetch(`${process.env.REACT_APP_API_URL}/jobapp/getAllJobs`, {
+    useEffect(() => {
+        if (updateCardList) {
+            getAllJobs();            
+        }
+    }, [updateCardList])
+
+    const getAllJobs = () => {
+        fetch(`/jobapp/getAllJobs`, {
             method: 'GET',
             headers: {
                 'Content-Type' : 'application/json',
             },
         })
         .then(resp => resp.json())
-        .then(resp => setData(resp))
-        .catch(err => console.log(err))      
-    }, []);
+        .then(resp => {
+            setData(resp)
+            setInitialized(true)
+            setUpdateCardList(false)
+        })        
+        .catch(err => console.log(err))    
+    }
 
+    
 
     return (
         <Router>
             <Switch>
                 <Route exact path={url} render={() => {
                     return (
-                        <div className={classes.root}>
-                            <Grid
-                                container
-                                spacing={1}
-                                direction="row"
-                                justify="space-between"
-                                alignItems="flex-start"
-                            >
-                                {data.map(elem => (
-                                    <Grid  item  xs={6} sm={3}  key={data.indexOf(elem)}>
-                                        <Card className={classes.card}>
-                                            <CardHeader
-                                                title={`${elem.jobTitle} at ${elem.company}`}
-                                               
-                                            />
-                                            <CardContent>
-                                                <Typography variant="body2" color="inherit" component="p">
-                                                    {elem.jobDescription.substring(0,50)} ...
-                                                </Typography>
-                                            </CardContent>
-                                            <CardActions className={classes.cardAction} disableSpacing>
-                                                <Button size="small" color="primary">
-                                                    <Link to={`${url}/${elem.jobID}`} onClick={onClick}>LEARN MORE</Link>  
-                                                </Button>                   
-                                            </CardActions>
-                                        </Card>
+                        <React.Fragment>
+                            { initialized ? (
+                                <div className={classes.root} >
+                                    <Grid
+                                        container
+                                        spacing={1}
+                                        direction="row"
+                                        justify="space-between"
+                                        alignItems="flex-start"
+                                    >                                
+                                        {data && data.length !== 0 && data.map(elem => (
+                                            <Grid  item  xs={6} sm={3}  key={data.indexOf(elem)}>
+                                                <Card className={classes.card}>
+                                                    <CardHeader
+                                                        title={`${elem.jobTitle} at ${elem.company}`}
+                                                    
+                                                    />
+                                                    <CardContent>
+                                                        <Typography variant="body2" color="inherit" component="p">
+                                                            {elem.jobDescription.substring(0,50)} ...
+                                                        </Typography>
+                                                    </CardContent>
+                                                    <CardActions className={classes.cardAction} disableSpacing>
+                                                        <Button size="small" color="primary">
+                                                            <Link to={`${url}/${elem.jobID}`} onClick={onClick}>LEARN MORE</Link>  
+                                                        </Button>                   
+                                                    </CardActions>
+                                                </Card>
+                                            </Grid>
+                                        ))}
                                     </Grid>
-                                ))}
-                            </Grid>
-                        </div>
+                                </div>
+                            ) : (
+                                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                    <CircularProgress style={{ marginTop: '20em', color: "green" }} />                    
+                                </div>
+                            )}                     
+                            
+                        </React.Fragment>
                     );
                 }}/>
 

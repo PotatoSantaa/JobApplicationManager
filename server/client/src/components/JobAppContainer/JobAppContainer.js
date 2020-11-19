@@ -26,7 +26,7 @@ const JobAppContainer = ({ match }) => {
     // eslint-disable-next-line
 
     const handleDelete = () => {
-      fetch(`${process.env.REACT_APP_API_URL}/jobapp/deleteJob/${match.params.id}`, {
+      fetch(`/jobapp/deleteJob/${match.params.id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type' : 'application/json',

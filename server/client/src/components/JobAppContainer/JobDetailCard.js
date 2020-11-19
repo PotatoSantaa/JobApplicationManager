@@ -23,7 +23,7 @@ const JobDetailCard = ({ jobID }) => {
     const [jobApp, setJobApp] = useState([]);
 
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_URL}/jobapp/getJob/${jobID}`, {
+        fetch(`/jobapp/getJob/${jobID}`, {
             method: 'GET',
         })
         .then(resp => resp.json())

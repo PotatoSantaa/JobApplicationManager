@@ -19,7 +19,7 @@ const Reminder = ({ jobID }) => {
 
   useEffect(() => {
       
-        fetch(`${process.env.REACT_APP_API_URL}/jobapp/getTask/${jobID}`, {
+        fetch(`/jobapp/getTask/${jobID}`, {
             method: 'GET',
         })
         .then(resp => resp.json())

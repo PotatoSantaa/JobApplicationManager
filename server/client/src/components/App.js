@@ -24,11 +24,9 @@ export default function App() {
           { /* Authenticated view */ }
           <Route exact path={["/task", "/dashboard" ]}>
             <Header/>
-              <Switch>
-                  {/* PrivateRoute is a custom class that redirects users
-                  to the login page if and only if they are not logged in */}
-                  <PrivateRoute exact path='/task' component={TaskBoard}/>      
-                  <PrivateRoute exact path='/dashboard' component={UserDashboard}/>                                                             
+              <Switch>                  
+                  <Route exact path='/task' component={TaskBoard}/>      
+                  <Route exact path='/dashboard' component={UserDashboard}/>                                                             
               </Switch>
             <Footer/>                                      
           </Route>

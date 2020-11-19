@@ -16,6 +16,7 @@ const UserDashboard = () => {
     const [company, setCompany] = useState('');
     const [jobDescription, setJobDescription] = useState('');
     const [haveApplied, setHaveApplied] = useState();
+    const [updateCardList, setUpdateCardList] = useState(false);
 
     const onSubmit = ((event) => {      
         event.preventDefault(event);
@@ -40,24 +41,30 @@ const UserDashboard = () => {
 
     useEffect(() => {
         if(isSubmitted) {
-           fetch(`${process.env.REACT_APP_API_URL}/jobapp/createJob`, {
+           fetch(`/jobapp/createJob`, {
                 method: 'POST',
                 headers: {
                     'Content-Type' : 'application/json',
                 },
                 body: JSON.stringify({jobID: jobID, jobTitle: jobTitle , company: company, jobDescription : jobDescription , haveApplied : haveApplied})
             })
-            .then(resp => resp.json())
+            .then(resp => {
+                resp.json();
+                setUpdateCardList(true);
+            })
             .catch(err => console.log(err))
         }
         // eslint-disable-next-line
     }, [isSubmitted]);
 
-
     return (
         <div className="UserDashboard">
             {isClicked ? null :<Container triggerText={triggerText} onSubmit={onSubmit} />}      
-            <CardList onClick={onClick}/>
+            <CardList 
+                onClick={onClick}
+                updateCardList
+                setUpdateCardList
+            />
         </div>
     );
 };
