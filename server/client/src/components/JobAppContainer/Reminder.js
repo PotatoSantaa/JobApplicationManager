@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../Auth/Auth'
 import { makeStyles } from '@material-ui/core/styles';
 import {Alert, AlertTitle} from '@material-ui/lab';
 
@@ -12,24 +13,29 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Reminder = ({ jobID }) => {
+  const { user } = useContext(AuthContext);    
   const classes = useStyles();
 
   const [reminder, setReminder] = useState('none');
   const [keyword, setKeyword] = useState('task');
 
   useEffect(() => {
-      
-        fetch(`/jobapp/getTask/${jobID}`, {
-            method: 'GET',
-        })
-        .then(resp => resp.json())
-        .then(resp => {
-          setReminder(resp);
-          setKeyword(resp.taskKeyword)
-        })
-        .catch(err => console.log(err))
-        
+      if (user) {
+        getTask(user.uid);
+      }
     }, [jobID]);
+
+  const getTask = (userID) => {
+    fetch(`/jobapp/getTask/${userID}/${jobID}`, {
+        method: 'GET',
+    })
+    .then(resp => resp.json())
+    .then(resp => {
+      setReminder(resp);
+      setKeyword(resp.taskKeyword)
+    })
+    .catch(err => console.log(err))
+  }
 
   return (
     <div className={classes.root}>

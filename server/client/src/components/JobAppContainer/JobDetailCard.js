@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../Auth/Auth'
 import { makeStyles } from '@material-ui/core/styles';
 
 import {
@@ -17,20 +17,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const JobDetailCard = ({ jobID }) => {
-
+    const { user } = useContext(AuthContext);    
     const classes = useStyles();
 
     const [jobApp, setJobApp] = useState([]);
 
     useEffect(() => {
-        fetch(`/jobapp/getJob/${jobID}`, {
+        if (user) {
+            getJob(user.uid)
+        }        
+    // eslint-disable-next-line        
+    }, []);
+
+    const getJob = (userID) => {
+        fetch(`/jobapp/getJob/${userID}/${jobID}`, {
             method: 'GET',
         })
         .then(resp => resp.json())
         .then(resp => setJobApp(resp))
         .catch(err => console.log(err))
-    // eslint-disable-next-line        
-    }, []);
+    }
   
     return (
         <Card className={classes.card}>

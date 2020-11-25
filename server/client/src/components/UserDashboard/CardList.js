@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../Auth/Auth'
 import JobAppContainer from '../JobAppContainer';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const CardList = ({...props}) => {
-
+    const { user } = useContext(AuthContext);    
     const {
         onClick,
         updateCardList,
@@ -58,13 +58,13 @@ const CardList = ({...props}) => {
     }, [initialized, updateCardList])
 
     useEffect(() => {
-        if (updateCardList) {
-            getAllJobs();            
+        if (user && updateCardList) {            
+            getAllJobs(user.uid);            
         }
-    }, [updateCardList])
-
-    const getAllJobs = () => {
-        fetch(`/jobapp/getAllJobs`, {
+    }, [user, updateCardList])
+    
+    const getAllJobs = (userID) => {                
+        fetch(`/jobapp/getAllJobs/${userID}`, {
             method: 'GET',
             headers: {
                 'Content-Type' : 'application/json',
@@ -72,14 +72,13 @@ const CardList = ({...props}) => {
         })
         .then(resp => resp.json())
         .then(resp => {
+            console.log(JSON.stringify(userID));
             setData(resp)
             setInitialized(true)
             setUpdateCardList(false)
         })        
         .catch(err => console.log(err))    
     }
-
-    
 
     return (
         <Router>

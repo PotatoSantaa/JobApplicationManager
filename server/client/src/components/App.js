@@ -21,14 +21,14 @@ export default function App() {
                                                
           </Route>
           { /* Authenticated view */ }
-          <Route exact path={["/limited", "/dashboard" ]}>
+          <Route exact path={["/limited", "/dashboard" ]}>            
             <Header/>
               <Switch>                       
                   <Route exact path='/dashboard' component={UserDashboard}/> 
                   <Route exact path='/limited' component={LimitedAccess}/>                                                              
               </Switch>
-            <Footer/>                                      
-          </Route>
+            <Footer/>                                                  
+          </Route>          
           { /* Wrong url view */ }
           <Route path="*" component={NotFoundPage}/>
 

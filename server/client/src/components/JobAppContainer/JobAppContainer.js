@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-
+import React, { useContext } from 'react';
+import { AuthContext } from '../Auth/Auth'
 import TaskBoard from '../TaskBoard';
 import Reminder from './Reminder';
 import JobDetailCard from './JobDetailCard';
@@ -16,21 +16,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const JobAppContainer = ({ match }) => {
-
+    const { user } = useContext(AuthContext);  
     const classes = useStyles();
     // eslint-disable-next-line
 
     const handleDelete = () => {
-      fetch(`/jobapp/deleteJob/${match.params.id}`, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type' : 'application/json',
-        },
-      })
-      .then(resp => resp.json())
-      .catch(err => console.log(err));
+      if (user) {
+        fetch(`/jobapp/deleteJob/${user.uid}/${match.params.id}`, {
+          method: 'DELETE',
+          headers: {
+              'Content-Type' : 'application/json',
+          },
+        })
+        .then(resp => resp.json())
+        .catch(err => console.log(err));
+        
+        window.location.href = '/dashboard';
+      } else {
+        console.log("Please log in before deleting a job app")
+      }
       
-      window.location.href = '/dashboard';
     };
   
     return (

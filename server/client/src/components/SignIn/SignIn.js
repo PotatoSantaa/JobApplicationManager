@@ -10,7 +10,7 @@ import { useSnackbar } from 'notistack';
 
 const Auth = () => {
     const styles = useStyles();
-    const { enqueueSnackbar } = useSnackbar();
+    const { enqueueSnackbar } = useSnackbar();    
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -33,8 +33,7 @@ const Auth = () => {
 
     const handleSignUp = useCallback(async () => {        
         try {            
-            await app.auth().createUserWithEmailAndPassword(email, password);
-            window.location.href = '/dashboard';
+            await app.auth().createUserWithEmailAndPassword(email, password)                            
         } catch (error) {
             showError(error.message);
         }
@@ -42,8 +41,7 @@ const Auth = () => {
 
     const handleSignIn = useCallback(async () => {        
         try {
-            await app.auth().signInWithEmailAndPassword(email, password);
-            window.location.href = '/dashboard';
+            await app.auth().signInWithEmailAndPassword(email, password)                            
         } catch (error) {
             showError(error.message);
         }
@@ -60,9 +58,10 @@ const Auth = () => {
         });
     }
 
-    const { currentUser } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     
-    if (currentUser) {
+    if (user) {
+        console.log("The user is " + JSON.stringify(user))
         return <Redirect to="/dashboard"/>
     }    
 

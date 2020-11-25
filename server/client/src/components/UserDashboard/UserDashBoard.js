@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../Auth/Auth'
 import Container from './Container';
 import CardList from './CardList';
 
 import '../../styles/UserDashboard.css';
 
 const UserDashboard = () => {
-
+    const { user } = useContext(AuthContext);    
+    
     const triggerText = 'Create Application';
 
     const [isSubmitted, setSubmitted] = useState(false);
@@ -38,24 +39,27 @@ const UserDashboard = () => {
         setClicked(true);
     })
 
-
     useEffect(() => {
-        if(isSubmitted) {
-           fetch(`/jobapp/createJob`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type' : 'application/json',
-                },
-                body: JSON.stringify({jobID: jobID, jobTitle: jobTitle , company: company, jobDescription : jobDescription , haveApplied : haveApplied})
-            })
-            .then(resp => {
-                resp.json();
-                setUpdateCardList(true);
-            })
-            .catch(err => console.log(err))
+        if(user && isSubmitted) {
+           createJob(user.uid)
         }
         // eslint-disable-next-line
     }, [isSubmitted]);
+
+    const createJob = (userID) => {
+        fetch(`/jobapp/createJob/${userID}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type' : 'application/json',
+            },
+            body: JSON.stringify({jobID: jobID, jobTitle: jobTitle , company: company, jobDescription : jobDescription , haveApplied : haveApplied})
+        })
+        .then(resp => {
+            resp.json();
+            setUpdateCardList(true);
+        })
+        .catch(err => console.log(err))
+    }
 
     return (
         <div className="UserDashboard">
