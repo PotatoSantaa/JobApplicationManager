@@ -25,12 +25,63 @@ public class JobAppController {
     @Autowired
     JobService jobService;
 
+    @GetMapping("/getAllJobs/{id}")
+    public List getAllJobApps(@PathVariable("id") String userId) throws FirebaseAuthException, ExecutionException, InterruptedException {
+        return jobService.getAllJobApps(userId);
+    }
+
+    @PostMapping("/createJob/{id}")
+    public String createJob(@PathVariable("id") String userId, @RequestBody JobApp job)
+            throws InterruptedException, ExecutionException, FirebaseAuthException {
+
+        return jobService.addJob(userId, job);
+    }
+
+    @GetMapping("/getJob/{id}/{jobId}")
+    public JobApp getJob(@PathVariable("id") String userId, @PathVariable("jobId") String jobId)
+            throws InterruptedException, ExecutionException, FirebaseAuthException {
+        return jobService.getJob(userId, jobId);
+    }
+
+    @PutMapping("/updateJob/{id}")
+    public String updateJob(@PathVariable("id") String userId, @RequestBody JobApp job)
+            throws InterruptedException, ExecutionException, FirebaseAuthException {
+
+        return jobService.updateJob(userId, job);
+    }
+
+    @DeleteMapping("/deleteJob/{id}/{jobId}")
+    public String deleteJob(@PathVariable("id") String userId, @PathVariable("jobId") String jobId)
+            throws InterruptedException, ExecutionException, FirebaseAuthException {
+
+        return jobService.deleteJob(userId, jobId);
+    }
+
+    @GetMapping("/getAllTasks/{id}")
+    public List getAllTasks(@PathVariable("id") String userId) throws FirebaseAuthException, ExecutionException, InterruptedException {
+        return jobService.getAllTasks(userId);
+    }
+
+    @GetMapping("/getTask/{id}/{jobId}")
+    public Task getTask(@PathVariable("id") String userId, @PathVariable("jobId") String jobId)
+            throws InterruptedException, ExecutionException, FirebaseAuthException {
+        return jobService.getTask(userId, jobId);
+    }
+
+    @DeleteMapping("/deleteTask/{id}/{jobId}")
+    public String deleteTask(@PathVariable("id") String userId, @PathVariable("jobId") String jobId)
+            throws InterruptedException, ExecutionException, FirebaseAuthException {
+
+        return jobService.deleteTask(userId, jobId);
+    }
+
+
+    // Mappings for HashMap methods ==> will be deleted later    
     @GetMapping("/{id}")
     public JobApp getJobAppById(@PathVariable("id") String jobAppID) {
         return jobService.getJobAppById(jobAppID);
     }
 
-    // Mappings for HashMap methods ==> will be deleted later
     @RequestMapping(method = RequestMethod.POST, value = "/jobapp")
     public void addJobApp(@RequestBody JobApp jobApp) {
         jobService.addJobApp(jobApp);
@@ -45,62 +96,4 @@ public class JobAppController {
     public void deleteJobApp(@PathVariable("id") String jobAppID) {
         jobService.deleteJobApp(jobAppID);
     }
-
-    @GetMapping("/getAllJobs")
-    public List getAllJobApps() throws FirebaseAuthException, ExecutionException, InterruptedException {
-        return jobService.getAllJobApps();
-    }
-
-    @GetMapping("/getAllTasks")
-    public List getAllTasks() throws FirebaseAuthException, ExecutionException, InterruptedException {
-        return jobService.getAllTasks();
-    }
-
-    @GetMapping("/getTask/{id}")
-    public Task getTask(@PathVariable("id") String jobId)
-            throws InterruptedException, ExecutionException, FirebaseAuthException {
-        return jobService.getTask(jobId);
-    }
-
-    @DeleteMapping("/deleteTask")
-    public String deleteTask(@RequestParam String jobId)
-            throws InterruptedException, ExecutionException, FirebaseAuthException {
-
-        return jobService.deleteTask(jobId);
-    }
-
-    // Mappings for Firebase database
-    // @GetMapping("/getJob")
-    // public JobApp getJob(@RequestParam String jobId)
-    // throws InterruptedException, ExecutionException, FirebaseAuthException {
-    // return jobService.getJob(jobId);
-    // }
-
-    @GetMapping("/getJob/{id}")
-    public JobApp getJob(@PathVariable("id") String jobId)
-            throws InterruptedException, ExecutionException, FirebaseAuthException {
-        return jobService.getJob(jobId);
-    }
-
-    @PostMapping("/createJob")
-    public String createJob(@RequestBody JobApp job)
-            throws InterruptedException, ExecutionException, FirebaseAuthException {
-
-        return jobService.addJob(job);
-    }
-
-    @PutMapping("/updateJob")
-    public String updateJob(@RequestBody JobApp job)
-            throws InterruptedException, ExecutionException, FirebaseAuthException {
-
-        return jobService.updateJob(job);
-    }
-
-    @DeleteMapping("/deleteJob/{id}")
-    public String deleteJob(@PathVariable("id") String jobId)
-            throws InterruptedException, ExecutionException, FirebaseAuthException {
-
-        return jobService.deleteJob(jobId);
-    }
-
 }
